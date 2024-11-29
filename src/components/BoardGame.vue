@@ -1,5 +1,8 @@
 <template>
   <table class="table">
+
+
+
     <thead>
     <tr>
       <th>Game</th>
