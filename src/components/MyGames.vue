@@ -1,4 +1,8 @@
 <template>
+  <table class="table">
+
+
+
   <form @submit.prevent="addGame" class="d-flex align-items-center mb-4">
     <input
         type="text"
@@ -34,12 +38,14 @@
     <thead>
     <tr>
       <th>Name</th>
+      <th>Game</th>
       <th>Description</th>
       <th>Game Type</th>
       <th>Location</th>
     </tr>
     </thead>
     <tbody>
+    <tr v-for="item in allGamesList" :key="item">
     <tr v-for="item in allGamesList" :key="item.id">
       <td>{{ item.id }}</td>
       <td>{{ item.gamename }}</td>
