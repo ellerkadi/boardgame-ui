@@ -156,26 +156,27 @@
       <td>{{ item.location }}</td>
       <td>{{ item.availability }}</td>
       <td>
-        <section class="modal hidden">
-          <div class="flex">
-            <img src="user.png" width="50px" height="50px" alt="user" />
-            <button class="btn-close">⨉</button>
-          </div>
-          <div>
-            <h3>Stay in touch</h3>
-            <p>
-              This is a dummy newsletter form so don't bother trying to test it. Not
-              that I expect you to, anyways. :)
-            </p>
-          </div>
+        <div>
+          <!-- Button to trigger the modal -->
+          <button @click="openModal" class="btn btn-danger btn-sm action-button">Change</button>
+          <section class="modal" :class="{ hidden: !isModalVisible }" id="updateGameModal">
+            <div class="flex">
+              <img src="user.png" width="50px" height="50px" alt="user" />
+              <button @click="closeModal" class="btn-close">⨉</button>
+            </div>
+            <div>
+              <h3>Stay in touch</h3>
+              <p>
+                This is a dummy newsletter form so don't bother trying to test it. Not
+                that I expect you to, anyways. :)
+              </p>
+            </div>
+            <input type="email" id="email" placeholder="brendaneich@js.com" />
+            <button class="btn">Submit</button>
+          </section>
 
-          <input type="email" id="email" placeholder="brendaneich@js.com" />
-          <button class="btn">Submit</button>
-        </section>
-
-        <div class="overlay hidden"></div>
-        <button class="btn btn-open">Change</button>
-
+          <div class="overlay" :class="{ hidden: !isModalVisible }" @click="closeModal"></div>
+        </div>
      <!--   <div class = "modal fade"
              id="updateGameModal" tabindex="-1" aria-labelledby="updateGameModalLabel" aria-hidden="true">
           <div class="modal-dialog">
