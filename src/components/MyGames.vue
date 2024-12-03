@@ -2,6 +2,8 @@
 
   <h2>SEARCH</h2>
 
+
+
   <div>
     <h3>Search by Game</h3>
     <input type="text" id="searchGameInput" placeholder="Enter game name"/>
