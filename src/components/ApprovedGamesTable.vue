@@ -19,8 +19,11 @@
         <td>{{ game.gametype }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
+
         <td>
-          <button >Change</button>
+          <button v-if="editingId === game.id" @click="updateGame(game.id)">Save</button>
+          <button v-if="editingId === game.id" @click="cancelEdit">Cancel</button>
+          <button v-else @click="UpdateApp">Change</button>
           <button @click="deleteGame(game.id)">Remove</button>
         </td>
       </tr>
@@ -31,8 +34,15 @@
 
 <script>
 import axios from "axios";
+import UpdateApp from "@/components/UpdateApp.vue";
 
 export default {
+  computed: {
+    UpdateApp() {
+      return UpdateApp
+    }
+  },
+
   props: ["api"],
   data() {
     return { approvedGames: [] };
