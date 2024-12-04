@@ -1,5 +1,3 @@
-<!--
-{
 <template>
   <div>
     <h2>Login</h2>
@@ -25,11 +23,11 @@ import axios from "axios";
 export default {
   data() {
     return {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       error: null,
       success: null,
-      api: "http://localhost:8082/api/auth/login",
+      api: "http://localhost:8082/api/users/login",
     };
   },
   methods: {
@@ -39,7 +37,12 @@ export default {
       axios
           .post(this.api, {username: this.username, password: this.password})
           .then((response) => {
-            this.success = response.data;
+            const token = response.data.token;
+            localStorage.setItem('authToken', token);
+            this.isLoggedIn = true;
+            this.success = "Login successful!";
+            console.log('Redirecting to /search-games');
+            this.$router.push('/search-games').catch(err => console.error(err));  // Navigate to the search games page
           })
           .catch((error) => {
             this.error = error.response?.data || "Login failed";
@@ -48,4 +51,3 @@ export default {
   },
 };
 </script>
-}-->
