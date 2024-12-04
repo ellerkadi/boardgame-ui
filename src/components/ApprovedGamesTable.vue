@@ -20,6 +20,7 @@
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>
+          <button >Change</button>
           <button @click="deleteGame(game.id)">Remove</button>
         </td>
       </tr>
