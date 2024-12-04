@@ -156,16 +156,8 @@
       <td>{{ item.location }}</td>
       <td>{{ item.availability }}</td>
       <td>
-
-        <div>
           <button @click="openModal" class="btn btn-danger btn-sm action-button">Change</button>
-          <div v-if="isModalVisible" class="modal-backdrop" @click="closeModal"></div>
-          <div v-if="isModalVisible" class="modal"><button @click="closeModal">Close</button>
-            <h2>Modal Title</h2>
-            <p>This is a modal box.</p>
-          </div>
-        </div>
-        <button @click="deleteGameById(item.id)" class="btn btn-danger btn-sm action-button">Remove</button>
+          <button @click="deleteGameById(item.id)" class="btn btn-danger btn-sm action-button">Remove</button>
       </td>
     </tr>
     </tbody>
@@ -216,7 +208,6 @@ export default {
     findGameByGamenameResult: [],
     findGameByAvailabilityResult: [],
     findGameByGametypeResult: [],
-    isModalVisible: false,
     newGame: {
       gamename: "",
       description: "",
@@ -234,12 +225,6 @@ export default {
   }),
 
   methods: {
-    openModal() {
-      this.isModalVisible = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
-    },
 
     fetchGames() {
       axios
