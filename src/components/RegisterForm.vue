@@ -1,10 +1,10 @@
-<!--
 <template>
   <div>
     <h2>Register</h2>
     <form @submit.prevent="register">
       <input type="text" v-model="username" placeholder="Username" required />
       <input type="password" v-model="password" placeholder="Password" required />
+      <input type="text" v-model="name" placeholder="First name" required />
       <input type="text" v-model="email" placeholder="Email" required />
       <button type="submit">Register</button>
     </form>
@@ -22,24 +22,26 @@ export default {
       username: '',
       password: '',
       email: '',
+      role: '',
       message: '',
     };
   },
   methods: {
     async register() {
       try {
-        const response = await axios.post('http://localhost:8080/api/users/register', {
+        const response = await axios.post('http://localhost:8082/api/users/register', {
           name: this.name,
           username: this.username,
           password: this.password,
           email: this.email,
+          role: 'user',
         });
         this.message = response.data;
       } catch (error) {
-        this.message = 'Registration failed!';
+        this.message = error.response?.data.message || 'Registration failed!';
         console.error(error);
       }
     },
   },
 };
-</script>-->
+</script>
