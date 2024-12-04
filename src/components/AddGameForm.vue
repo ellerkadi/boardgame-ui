@@ -1,6 +1,6 @@
 <template>
+  <h2>Add new game</h2>
   <form @submit.prevent="addGame" class="d-flex align-items-center mb-4">
-    <h2>Add new game</h2>
 
     <input
         type="text"
