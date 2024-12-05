@@ -54,6 +54,7 @@ export default {
       password: '',
       error: null,
       success: null,
+      isLoggedIn: false,
       api: "http://localhost:8082/api/auth/login",
     };
   },
@@ -62,17 +63,18 @@ export default {
       this.error = null;
       this.success = null;
       axios
-          .post(this.api, {username: this.username, password: this.password})
+          .post(this.api, { username: this.username, password: this.password })
           .then((response) => {
             const token = response.data.token;
             localStorage.setItem('authToken', token);
             this.isLoggedIn = true;
             this.success = "Login successful!";
             console.log('Redirecting to /search-games');
-            this.$router.push('/search-games').catch(err => console.error(err));  // Navigate to the search games page
+            this.$router.push('/search-games').catch((err) => console.error(err));  // Navigate to the search games page
           })
           .catch((error) => {
             this.error = error.response?.data || "Login failed";
+            this.isLoggedIn = false;  // Ensure isLoggedIn is false if login fails
           });
     },
     handleLoginSuccess() {
@@ -81,12 +83,18 @@ export default {
       this.$router.push("/search-games");
     },
     logout() {
-      this.isLoggedIn = false;
       localStorage.removeItem('authToken');
       this.$router.push("/login");
     },
     toggleForm() {
       this.showLogin = !this.showLogin;
+    },
+
+    mounted() {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        this.isLoggedIn = true;
+      }
     },
   },
 };
