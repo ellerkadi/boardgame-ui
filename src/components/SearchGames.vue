@@ -60,7 +60,7 @@
 </select>
 
 <table>
-<thead>
+<thead v-if="findGameByGametypeResult.length > 0">
 <tr>
   <th>Name</th>
   <th>Description</th>

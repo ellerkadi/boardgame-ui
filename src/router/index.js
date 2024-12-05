@@ -23,8 +23,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    /*const isAuthenticated = !!localStorage.getItem('authToken');*/
-    if (to.meta.requiresAuth) {
+    const isAuthenticated = !!localStorage.getItem('authToken');
+    if (to.meta.requiresAuth && !isAuthenticated) {
         next({ path: '/login' });  // Redirect to login if not authenticated
     } else {
         next();  // Allow navigation if authenticated
