@@ -17,9 +17,7 @@ export default {
       showLogin: true,
     };
   },
-  components: {
 
-  },
   methods: {
     fetchGames() {
       axios
@@ -29,8 +27,9 @@ export default {
     },
   },
   mounted() {
-    if (localStorage.getItem("isLoggedIn")) {
-      this.fetchGames(); // Fetch games only if logged in
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.isLoggedIn = true;
     }
   },
 };
