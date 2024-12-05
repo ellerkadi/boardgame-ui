@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // import HomeView from '@/components/HomeView.vue';
 import LoginForm from '@/components/LoginForm.vue';
+import RegisterForm from '@/components/RegisterForm.vue';
 import SearchGames from '@/components/SearchGames.vue';
 import AddGameForm from '@/components/AddGameForm.vue';
 import PendingGamesTable from '@/components/PendingGamesTable.vue';
@@ -11,6 +12,7 @@ const routes = [
     // { path: '/', component: HomeView, name: 'Home' },
     { path: '/', redirect: '/login' },
     { path: '/login', component: LoginForm, name: 'Login' },
+    { path: '/register', component: RegisterForm, name: 'Register' },
     { path: '/search-games', component: SearchGames, meta: { requiresAuth: true }  },
     { path: '/add-game', component: AddGameForm, name: 'AddGameForm', meta: { requiresAuth: true } },
     { path: '/pending-games', component: PendingGamesTable, name: 'PendingGames', meta: { requiresAuth: true } },

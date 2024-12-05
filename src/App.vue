@@ -2,23 +2,24 @@
   <h1>Welcome To Boardgame Rental!</h1>
   <div>
     <router-view></router-view>
+    <Logout/>
   </div>
 </template>
 
 <script>
-
+import Logout from './components/LogoutButton.vue';
 import axios from "axios";
 
 export default {
+  components: {
+    Logout,
+  },
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
       isLoggedIn: false,
       showLogin: true,
     };
-  },
-  components: {
-
   },
   methods: {
     fetchGames() {
@@ -28,10 +29,6 @@ export default {
       });
     },
   },
-  mounted() {
-    if (localStorage.getItem("isLoggedIn")) {
-      this.fetchGames(); // Fetch games only if logged in
-    }
-  },
+
 };
 </script>

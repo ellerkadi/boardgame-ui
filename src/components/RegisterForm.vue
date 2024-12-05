@@ -8,6 +8,10 @@
       <input type="text" v-model="email" placeholder="Email" required />
       <button type="submit">Register</button>
     </form>
+    <p>
+      Already have an account?
+      <button @click="goToLogin">Login</button>
+    </p>
     <p>{{ message }}</p>
   </div>
 </template>
@@ -41,6 +45,9 @@ export default {
         this.message = error.response?.data.message || 'Registration failed!';
         console.error(error);
       }
+    },
+    goToLogin() {
+      this.$router.push('/login');
     },
   },
 };
