@@ -19,9 +19,11 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem('authToken');
-      this.isLoggedIn = false;
-      this.$router.push("/login");
+      this.$router.push('/login').then(() => {
+        window.location.reload();
+      });
     },
-  },
+  }
+
 };
 </script>

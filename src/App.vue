@@ -8,7 +8,6 @@
 
 <script>
 import Logout from './components/LogoutButton.vue';
-import axios from "axios";
 
 export default {
   components: {
@@ -20,15 +19,7 @@ export default {
       isLoggedIn: false,
       showLogin: true,
     };
-  },
-  methods: {
-    fetchGames() {
-      axios
-          .get(`${this.api}/approvedGames`).then((res) => {
-        this.approvedGames = res.data;
-      });
-    },
-  },
+  }
 
 };
 </script>

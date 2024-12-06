@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import {jwtDecode} from 'jwt-decode';
 
-// import HomeView from '@/components/HomeView.vue';
 import LoginForm from '@/components/LoginForm.vue';
 import RegisterForm from '@/components/RegisterForm.vue';
 import SearchGames from '@/components/SearchGames.vue';
@@ -9,14 +9,13 @@ import PendingGamesTable from '@/components/PendingGamesTable.vue';
 import ApprovedGamesTable from '@/components/ApprovedGamesTable.vue';
 
 const routes = [
-    // { path: '/', component: HomeView, name: 'Home' },
     { path: '/', redirect: '/login' },
     { path: '/login', component: LoginForm, name: 'Login' },
     { path: '/register', component: RegisterForm, name: 'Register' },
-    { path: '/search-games', component: SearchGames, meta: { requiresAuth: true }  },
-    { path: '/add-game', component: AddGameForm, name: 'AddGameForm', meta: { requiresAuth: true } },
-    { path: '/pending-games', component: PendingGamesTable, name: 'PendingGames', meta: { requiresAuth: true } },
-    { path: '/approved-games', component: ApprovedGamesTable, name: 'ApprovedGames', meta: { requiresAuth: true } },
+    { path: '/search-games', component: SearchGames, meta: { requiresAuth: true } },
+    { path: '/add-game', component: AddGameForm, meta: { requiresAuth: true } },
+    { path: '/pending-games', component: PendingGamesTable, meta: { requiresAuth: true } },
+    { path: '/approved-games', component: ApprovedGamesTable, meta: { requiresAuth: true } },
 ];
 
 const router = createRouter({
@@ -24,13 +23,25 @@ const router = createRouter({
     routes,
 });
 
+function isTokenValid(token) {
+    try {
+        const exp  = jwtDecode(token);
+        return Date.now() <= exp.exp * 1000;
+    } catch {
+        return false;
+    }
+}
+
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = !!localStorage.getItem('authToken');
+    const token = localStorage.getItem('authToken');
+    const isAuthenticated = token && isTokenValid(token);
+
     if (to.meta.requiresAuth && !isAuthenticated) {
-        next({ path: '/login' });  // Redirect to login if not authenticated
+        next({ path: '/login', query: { redirect: to.fullPath } });
     } else {
-        next();  // Allow navigation if authenticated
+        next();
     }
 });
+
 
 export default router;

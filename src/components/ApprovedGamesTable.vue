@@ -88,7 +88,6 @@ import axios from "axios";
 
 export default {
 
-  props: ["api"],
   data() {
     return {
       approvedGames: [],
