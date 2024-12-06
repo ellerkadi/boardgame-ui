@@ -6,7 +6,7 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Type</th>
+        <th>Game Type</th>
         <th>Location</th>
         <th>Availability</th>
         <th>Actions</th>
@@ -91,6 +91,7 @@ axios.defaults.withCredentials = true;
 export default {
   data() {
     return {
+      api: "http://localhost:8082/api/boardgame",
       approvedGames: [],
       isModalVisible: false,
       currentGame: null,
@@ -109,7 +110,7 @@ export default {
   methods: {
     fetchGames() {
       axiosInstance
-          .get("http://localhost:8082/api/boardgame/approvedGames")
+          .get(`${this.api}/approvedGames`)
           .then((response) => {
             this.approvedGames = response.data;
           })

@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import axiosInstance from "@/axiosConfig";
+axiosInstance.defaults.withCredentials = true;
 
 export default {
   data() {
@@ -48,18 +49,34 @@ export default {
         location: "",
         gametype: "",
         availability: "",
-        status: "PENDING"
+        status: "PENDING",
+        user: { username: "kadi" },
       },
+      api: "http://localhost:8082/api/boardgame",
     };
   },
   methods: {
     addGame() {
-      axios
-          .post(`${this.api}/addGame`, this.newGame)
-          .then(() => {
-            this.$emit("game-added");
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        console.error("Authorization token is missing!");
+        return;
+      }
+
+
+
+      axiosInstance
+          .post(`${this.api}/addGame`, this.newGame, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           })
-          .catch(console.error);
+          .then((response) => {
+            console.log("Game added successfully:", response.data);
+          })
+          .catch((error) => {
+            console.error("Failed to add game:", error.response || error.message);
+          });
     },
   },
 };
