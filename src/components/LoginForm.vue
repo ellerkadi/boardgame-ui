@@ -48,7 +48,7 @@ export default {
             const token = response.data.token;
             localStorage.setItem('authToken', token);
             console.log("auth token : " + localStorage.getItem('authToken'));
-            const redirectTo = this.$route.query.redirect || '/search-games';
+            const redirectTo = this.$route.query.redirect || '/home-page';
 
             this.$router.push(redirectTo).catch((err) => {
               console.error('Routing error:', err);
@@ -58,6 +58,9 @@ export default {
             this.error = error.response?.data || "Login failed";
             this.isLoggedIn = false;  // Ensure isLoggedIn is false if login fails
           });
+    },
+    goToRegister() {
+      this.$router.push('/register');
     },
   },
   mounted() {
