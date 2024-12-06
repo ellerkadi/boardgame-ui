@@ -42,7 +42,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      api: "http://localhost:8082/api/boardgame",
       newGame: {
         gamename: "",
         description: "",
