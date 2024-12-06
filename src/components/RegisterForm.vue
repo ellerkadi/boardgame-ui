@@ -22,6 +22,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      api: "http://localhost:8082/api/auth",
       name: '',
       username: '',
       password: '',
@@ -33,7 +34,7 @@ export default {
   methods: {
     async register() {
       try {
-        const response = await axios.post('http://localhost:8082/api/auth/register', {
+        const response = await axios.post(`${this.api}/register`, {
           name: this.name,
           username: this.username,
           password: this.password,

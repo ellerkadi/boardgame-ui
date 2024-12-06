@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Search by Game</h3>
+    <h3>Search Game</h3>
     <input type="text" id="searchGameInput" placeholder="Enter game name"/>
     <button @click="findGameByGamename">Search</button>
 
@@ -13,6 +13,7 @@
       <th>Availability</th>
     </tr>
     </thead>
+
     <tbody v-for="game in findGameByGamenameResult" :key="game.id">
     <tr>
       <td>{{ game.gamename }}</td>
@@ -22,8 +23,8 @@
       <td>{{ game.availability }}</td>
     </tr>
     </tbody>
-
-    <h3>Search by Availability</h3>
+    <br>
+    <br>
     <select id="availabilitySelect" @change="findGameByAvailability">
       <option value="">Select Availability</option>
       <option value="true">Available</option>
@@ -49,7 +50,6 @@
       </tbody>
     </table>
 
-    <h3>Search by Game Type</h3>
     <select id="gametypeSelect" @change="findGameByGametype">
       <option value="">Select Game Type</option>
       <option value="Games for children">Games for children</option>

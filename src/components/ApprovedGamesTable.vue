@@ -42,14 +42,20 @@
                 <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Game Name">
               </div>
+            </form>
+              <form>
               <div class="mb-3 form-check">
                 <input v-model="updatedGame.description" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Description">
               </div>
+              </form>
+                <form>
               <div class="mb-3 form-check">
                 <input v-model="updatedGame.location" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Location">
               </div>
+                </form>
+                  <form>
               <div class="mb-3 form-check">
                 <label for="floatingInput">Game Type</label>
                 <select v-model="updatedGame.gametype" type="option" class="form-control rounded-3" id="floatingInput">
@@ -59,6 +65,8 @@
                   <option value="Strategic games">Strategic games</option>
                 </select>
               </div>
+                  </form>
+                    <form>
               <div class="mb-3 form-check">
                 <label for="floatingInput">Game Availability</label>
                 <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
@@ -126,7 +134,7 @@ export default {
     },
     openModal(game) {
       this.currentGame = game;
-      this.updatedGame = {gamename: '', description: '', gametype: '', location: '', availability: ''};
+      this.updatedGame = {gamename: game.gamename, description: game.description, gametype: game.gametype, location: game.location, availability: game.availability};
       this.isModalVisible = true; // Show modal
     },
     closeModal() {

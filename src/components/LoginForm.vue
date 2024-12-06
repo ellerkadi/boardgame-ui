@@ -1,6 +1,5 @@
 <template>
   <div class="auth-container">
-    <!-- Login Form -->
     <div v-if="!isLoggedIn">
       <h2>Login</h2>
       <form @submit.prevent="login">
@@ -48,7 +47,7 @@ export default {
             const token = response.data.token;
             localStorage.setItem('authToken', token);
             console.log("auth token : " + localStorage.getItem('authToken'));
-            const redirectTo = this.$route.query.redirect || '/home-page';
+            const redirectTo = this.$route.query.redirect || '/home-page-wlogin';
 
             this.$router.push(redirectTo).catch((err) => {
               console.error('Routing error:', err);

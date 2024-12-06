@@ -34,6 +34,7 @@
     </select>
     <button>Add</button>
   </form>
+  <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
 </template>
 
 <script>
@@ -50,8 +51,9 @@ export default {
         gametype: "",
         availability: "",
         status: "PENDING",
-        user: { username: "kadi" },
+        user: { username: "aile" },
       },
+      successMessage: '',
       api: "http://localhost:8082/api/boardgame",
     };
   },
@@ -63,8 +65,6 @@ export default {
         return;
       }
 
-
-
       axiosInstance
           .post(`${this.api}/addGame`, this.newGame, {
             headers: {
@@ -73,6 +73,7 @@ export default {
           })
           .then((response) => {
             console.log("Game added successfully:", response.data);
+            this.successMessage = "Game added sucessfully!";
           })
           .catch((error) => {
             console.error("Failed to add game:", error.response || error.message);
@@ -80,4 +81,4 @@ export default {
     },
   },
 };
-</script>
+</script>pt>
