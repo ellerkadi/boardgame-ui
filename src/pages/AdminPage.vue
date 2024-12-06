@@ -1,11 +1,20 @@
-<script setup>
-
-</script>
-
 <template>
-
+  <div>
+    <PendingGamesTable/>
+  </div>
 </template>
 
-<style scoped>
+<script>
+import PendingGamesTable from "@/components/PendingGamesTable.vue";
 
-</style>
+export default {
+  components: {
+    PendingGamesTable
+  },
+  data() {
+    return {
+      api: "http://localhost:8082/api/boardgame",
+    };
+  },
+};
+</script>

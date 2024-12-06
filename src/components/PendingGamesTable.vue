@@ -30,33 +30,36 @@
 </template>
 
 <script>
-import axios from "axios";
+import axiosInstance from "@/axiosConfig";
+axiosInstance.defaults.withCredentials = true;
 
 export default {
-  props: ["api"],
   data() {
-    return { pendingGames: [] };
+    return {
+      api: "http://localhost:8082/api/boardgame",
+      pendingGames: [],
+    };
   },
   mounted() {
     this.fetchPendingGames();
   },
   methods: {
     fetchPendingGames() {
-      axios
+      axiosInstance
           .get(`${this.api}/pendingGames`)
-          .then((res) => {
-            this.pendingGames = res.data;
+          .then((response) => {
+            this.pendingGames = response.data;
           })
           .catch(console.error);
     },
     approveGame(id) {
-      axios
+      axiosInstance
           .post(`${this.api}/approveGame/${id}`)
           .then(() => this.fetchPendingGames())
           .catch(console.error);
     },
     rejectGame(id) {
-      axios
+      axiosInstance
           .post(`${this.api}/rejectGame/${id}`)
           .then(() => this.fetchPendingGames())
           .catch(console.error);
