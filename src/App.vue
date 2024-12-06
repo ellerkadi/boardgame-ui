@@ -1,5 +1,4 @@
 <template>
-  <h1>Welcome To Boardgame Rental!</h1>
   <div>
     <router-view></router-view>
     <Logout/>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import {jwtDecode} from 'jwt-decode';
 
 import HomePage from '@/pages/HomePage.vue';
+import HomePagewLogin from "@/pages/HomePagewLogin.vue";
 import LoginForm from '@/components/LoginForm.vue';
 import RegisterForm from '@/components/RegisterForm.vue';
 import SearchGames from '@/components/SearchGames.vue';
@@ -13,6 +14,7 @@ import AdminPage from "@/pages/AdminPage.vue";
 const routes = [
     { path: '/', redirect: '/home-page' },
     { path: '/home-page', component: HomePage, name: 'Home' },
+    { path: '/home-page-wlogin', component: HomePagewLogin, name: 'My Home' },
     { path: '/login', component: LoginForm, name: 'Login' },
     { path: '/register', component: RegisterForm, name: 'Register' },
     { path: '/admin-page', component: AdminPage, name: 'Register' },

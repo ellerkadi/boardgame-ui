@@ -1,35 +1,36 @@
 <template>
-  <h1>Welcome To Boardgame Rental!</h1>
+  <div>
+    <LogoutButton/>
+  </div>
   <div>
     <SearchGames/>
   </div>
   <div>
-    <ApprovedGamesTable/>
+    <AddGameForm/>
   </div>
   <div>
-    <button @click="redirectToLogin"> Login </button>
+    <ApprovedGamesTable/>
   </div>
 </template>
 
 <script>
 import ApprovedGamesTable from "@/components/ApprovedGamesTable.vue";
+import LogoutButton from "@/components/LogoutButton.vue";
 import SearchGames from "@/components/SearchGames.vue";
+import AddGameForm from "@/components/AddGameForm.vue";
 
 export default {
   components: {
     ApprovedGamesTable,
+    LogoutButton,
     SearchGames,
+    AddGameForm,
   },
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
     };
   },
-  methods: {
-    redirectToLogin() {
-      const redirectTo = this.$route.query.redirect || '/login';
-      this.$router.push(redirectTo);
-    },
-  },
+
 };
 </script>
