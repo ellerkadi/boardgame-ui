@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import {jwtDecode} from 'jwt-decode';
 
+import HomePage from '@/pages/HomePage.vue';
 import LoginForm from '@/components/LoginForm.vue';
 import RegisterForm from '@/components/RegisterForm.vue';
 import SearchGames from '@/components/SearchGames.vue';
@@ -9,7 +10,8 @@ import PendingGamesTable from '@/components/PendingGamesTable.vue';
 import ApprovedGamesTable from '@/components/ApprovedGamesTable.vue';
 
 const routes = [
-    { path: '/', redirect: '/login' },
+    { path: '/home-page', component: HomePage, name: 'Home' },
+    { path: '/', redirect: '/home-page' },
     { path: '/login', component: LoginForm, name: 'Login' },
     { path: '/register', component: RegisterForm, name: 'Register' },
     { path: '/search-games', component: SearchGames, meta: { requiresAuth: true } },

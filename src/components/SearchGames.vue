@@ -94,7 +94,6 @@ export default {
     };
   },
   methods: {
-
     fetchFindGameByGamename(gamename) {
       if (!gamename) {
         console.error("Game name is required to fetch data.");

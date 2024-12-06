@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Approved games</h2>
+    <h2>Approved Games</h2>
     <table>
       <thead>
       <tr>
@@ -85,9 +85,10 @@
 
 <script>
 import axios from "axios";
+import axiosInstance from "@/axiosConfig";
+axios.defaults.withCredentials = true;
 
 export default {
-
   data() {
     return {
       approvedGames: [],
@@ -107,12 +108,18 @@ export default {
   },
   methods: {
     fetchGames() {
-      axios.get(`${this.api}/approvedGames`).then((res) => {
-        this.approvedGames = res.data;
-      });
+      axiosInstance
+          .get("http://localhost:8082/api/boardgame/approvedGames")
+          .then((response) => {
+            this.approvedGames = response.data;
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+          });
     },
     deleteGame(id) {
-      axios.delete(`${this.api}/deleteGameById/${id}`).then(() => {
+      axiosInstance
+          .delete(`${this.api}/deleteGameById/${id}`).then(() => {
         this.fetchGames();
       });
     },
@@ -125,7 +132,7 @@ export default {
       this.isModalVisible = false; // Hide modal
     },
     updateGame() {
-      axios
+      axiosInstance
           .put(`${this.api}/updateGame/${this.currentGame.id}`, this.updatedGame)
           .then((res) => {
             console.log('Game updated:', res.data);
