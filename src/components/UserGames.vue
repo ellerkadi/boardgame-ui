@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
-      UserGames: [],
+      getGamesByUsername: [],
       isModalVisible: false,
       currentGame: null,
       updatedGame: {
@@ -109,8 +109,7 @@ export default {
         location: "",
         gametype: "",
         availability: "",
-        // username: this.username,
-        // SIIA VAJA USERNAME LISADA VIST
+        //username: '' ,
        },
     };
   },
@@ -121,8 +120,8 @@ export default {
     fetchGames() {
       axiosInstance
           .get(`${this.api}/getGamesByUsername/{username}`)
-          .then((response) => {
-            this.UserGames = response.data;
+          .then((res) => {
+            this.getGamesByUsername = res.data;
           })
           .catch((error) => {
             console.error("Error fetching games:", error);

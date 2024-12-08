@@ -67,9 +67,10 @@ export default {
 
       const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
       console.log('Logged in user:', loggedInUser); // PRINTS IN THE CONSOLE THE CORRECT USER, SO THIS WORKS
+      console.log('Game info is:', this.newGame)
 
       if (loggedInUser && loggedInUser.username) {
-        this.newGame.username = loggedInUser.username;  // Username is set here
+        this.newGame.user.username = loggedInUser.username;  // Username is set here
       } else {
         console.error("Logged in user data is missing!");
         return;
@@ -90,11 +91,5 @@ export default {
           });
     },
   },
-  //mounted() {
-  //  const savedUser = JSON.parse(localStorage.getItem('loggedInUser'));
-  //  if (savedUser) {
-  //    this.handleLogin(savedUser.username);
-  //  }
-  //},
 };
 </script>
