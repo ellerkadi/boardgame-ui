@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
-      getGamesByUsername: [],
+      UserGames: [],
       isModalVisible: false,
       currentGame: null,
       updatedGame: {
@@ -118,10 +118,11 @@ export default {
   },
   methods: {
     fetchGames() {
+      const username = JSON.parse(localStorage.getItem("loggedInUser"))?.username || this.$store.state.username;
       axiosInstance
-          .get(`${this.api}/getGamesByUsername/{username}`)
+          .get(`${this.api}/getGamesByUsername/${username}`)
           .then((res) => {
-            this.getGamesByUsername = res.data;
+            this.UserGames = res.data; // Use UserGames instead
           })
           .catch((error) => {
             console.error("Error fetching games:", error);
