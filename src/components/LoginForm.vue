@@ -37,6 +37,11 @@ export default {
       isLoggedIn: false
     };
   },
+  /*computed: {
+    userRole() {
+      return this.$store.state.role; // Access role from Vuex store
+    },
+  },*/
   methods: {
     login() {
       axiosInstance.post('/auth/login', {
@@ -44,11 +49,21 @@ export default {
         password: this.password,
       })
           .then((response) => {
+            //const role = response.data.role;
             const token = response.data.token;
-            localStorage.setItem('authToken', token);
-            console.log("auth token : " + localStorage.getItem('authToken'));
-            const redirectTo = this.$route.query.redirect || '/home-page-wlogin';
 
+            localStorage.setItem('authToken', token);
+            this.isLoggedIn = true;
+            this.loggedInUser = this.username;
+            localStorage.setItem('loggedInUser', JSON.stringify({ username: this.username }));
+            this.$emit('login', response.data.username);
+            console.log("auth token : " + localStorage.getItem('authToken'));
+
+            //this.$store.dispatch('login', {
+            //  role: response.data.role
+            //});
+
+            const redirectTo = this.$route.query.redirect || '/home-page';
             this.$router.push(redirectTo).catch((err) => {
               console.error('Routing error:', err);
             });
@@ -64,7 +79,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
-      this.isLoggedIn = true;
+      this.$store.commit('setIsLoggedIn', true); // Ensure isLoggedIn is correctly set
     }
   },
 };

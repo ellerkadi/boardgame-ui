@@ -55,7 +55,8 @@ select:focus {
 }
 
 button {
-    padding: 10px 15px;
+    padding: 8px 16px;
+    font-size: 14px;
     background-color: #5a7261;
     color: white;
     border: none;
@@ -68,6 +69,12 @@ button {
 button:hover {
     background-color: #486148;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns items to the right */
+    gap: 10px; /* Optional: Adds space between the buttons */
 }
 
 table {

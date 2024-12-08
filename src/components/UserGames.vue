@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Approved Games</h2>
+    <h2>Your Games</h2>
     <table>
       <thead>
       <tr>
@@ -9,19 +9,19 @@
         <th>Game Type</th>
         <th>Location</th>
         <th>Availability</th>
-        <th v-if="$store.state.isLoggedIn">Actions</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="game in approvedGames" :key="game.id">
+      <tr v-for="game in UserGames" :key="game.id">
         <td>{{ game.gamename }}</td>
         <td>{{ game.description }}</td>
         <td>{{ game.gametype }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>
-          <button v-if="$store.state.isLoggedIn" @click="openModal(game)">Change</button>
-          <button v-if="$store.state.isLoggedIn" @click="deleteGame(game.id)">Remove</button>
+          <button @click="openModal(game)">Change</button>
+          <button @click="deleteGame(game.id)">Remove</button>
         </td>
       </tr>
       </tbody>
@@ -43,19 +43,19 @@
                        placeholder="Game Name">
               </div>
             </form>
-              <form>
+            <form>
               <div class="mb-3 form-check">
                 <input v-model="updatedGame.description" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Description">
               </div>
-              </form>
-                <form>
+            </form>
+            <form>
               <div class="mb-3 form-check">
                 <input v-model="updatedGame.location" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Location">
               </div>
-                </form>
-                  <form>
+            </form>
+            <form>
               <div class="mb-3 form-check">
                 <label for="floatingInput">Game Type</label>
                 <select v-model="updatedGame.gametype" type="option" class="form-control rounded-3" id="floatingInput">
@@ -65,8 +65,8 @@
                   <option value="Strategic games">Strategic games</option>
                 </select>
               </div>
-                  </form>
-                    <form>
+            </form>
+            <form>
               <div class="mb-3 form-check">
                 <label for="floatingInput">Game Availability</label>
                 <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
@@ -100,7 +100,7 @@ export default {
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
-      approvedGames: [],
+      UserGames: [],
       isModalVisible: false,
       currentGame: null,
       updatedGame: {
@@ -109,21 +109,20 @@ export default {
         location: "",
         gametype: "",
         availability: "",
-      },
+        // username: this.username,
+        // SIIA VAJA USERNAME LISADA VIST
+       },
     };
   },
   mounted() {
     this.fetchGames();
-    if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
-    }
   },
   methods: {
     fetchGames() {
       axiosInstance
-          .get(`${this.api}/approvedGames`)
+          .get(`${this.api}/getGamesByUsername/{username}`)
           .then((response) => {
-            this.approvedGames = response.data;
+            this.UserGames = response.data;
           })
           .catch((error) => {
             console.error("Error fetching games:", error);
