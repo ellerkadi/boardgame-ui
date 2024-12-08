@@ -51,7 +51,7 @@ export default {
         gametype: "",
         availability: "",
         status: "PENDING",
-        user: { username: "aile" },
+        user: { username: '' },
       },
       successMessage: '',
       api: "http://localhost:8082/api/boardgame",
@@ -62,6 +62,16 @@ export default {
       const token = localStorage.getItem("authToken");
       if (!token) {
         console.error("Authorization token is missing!");
+        return;
+      }
+
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      console.log('Logged in user:', loggedInUser); // PRINTS IN THE CONSOLE THE CORRECT USER, SO THIS WORKS
+
+      if (loggedInUser && loggedInUser.username) {
+        this.newGame.username = loggedInUser.username;  // Username is set here
+      } else {
+        console.error("Logged in user data is missing!");
         return;
       }
 
@@ -80,5 +90,11 @@ export default {
           });
     },
   },
+  //mounted() {
+  //  const savedUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  //  if (savedUser) {
+  //    this.handleLogin(savedUser.username);
+  //  }
+  //},
 };
-</script>pt>
+</script>
