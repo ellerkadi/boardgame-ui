@@ -20,7 +20,7 @@
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>
-          <button v-if="$store.state.isLoggedIn" @click="openModal(game)">Change</button>
+          <button v-if="$store.state.isLoggedIn && $store.state.role === 'admin'"  @click="openModal(game)">Change</button>
           <button v-if="$store.state.isLoggedIn" @click="deleteGame(game.id)">Remove</button>
         </td>
       </tr>
@@ -116,9 +116,13 @@ export default {
     this.fetchGames();
     if (localStorage.getItem('authToken')) {
       this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
+      this.$store.dispatch("fetchRole");
     }
   },
   methods: {
+    fetchUserRole() {
+      return axiosInstance.get("/api/user/getUserRole");
+    },
     fetchGames() {
       axiosInstance
           .get(`${this.api}/approvedGames`)
