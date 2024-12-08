@@ -9,7 +9,7 @@
         <th>Game Type</th>
         <th>Location</th>
         <th>Availability</th>
-        <th v-if="$store.state.isLoggedIn">Actions</th>
+        <th v-if="isAdmin">Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -19,9 +19,9 @@
         <td>{{ game.gametype }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
-        <td>
-          <button v-if="$store.state.isLoggedIn && $store.state.role === 'admin'"  @click="openModal(game)">Change</button>
-          <button v-if="$store.state.isLoggedIn" @click="deleteGame(game.id)">Remove</button>
+        <td v-if="isAdmin"> <!-- if role is admin then show. -->
+          <button @click="openModal(game)">Change</button>
+          <button @click="deleteGame(game.id)">Remove</button>
         </td>
       </tr>
       </tbody>
@@ -31,46 +31,37 @@
          style="display: block;">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content rounded-4 shadow">
-          <div class="modal-header border-bottom-0"> <!-- title name -->
-            <h1 class="modal-title fs-5">Change Game</h1> <!-- title name -->
+          <div class="modal-header border-bottom-0">
+            <h1 class="modal-title fs-5">Change Game</h1>
             <button @click="closeModal" type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button> <!-- x button to close -->
+                    aria-label="Close"></button>
           </div>
           <div class="modal-body py-0">
             <form>
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3" id="floatingInput"
+                <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3"
                        placeholder="Game Name">
               </div>
-            </form>
-              <form>
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.description" type="text" class="form-control rounded-3" id="floatingInput"
+                <input v-model="updatedGame.description" type="text" class="form-control rounded-3"
                        placeholder="Description">
               </div>
-              </form>
-                <form>
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.location" type="text" class="form-control rounded-3" id="floatingInput"
+                <input v-model="updatedGame.location" type="text" class="form-control rounded-3"
                        placeholder="Location">
               </div>
-                </form>
-                  <form>
               <div class="mb-3 form-check">
-                <label for="floatingInput">Game Type</label>
-                <select v-model="updatedGame.gametype" type="option" class="form-control rounded-3" id="floatingInput">
+                <label>Game Type</label>
+                <select v-model="updatedGame.gametype" class="form-control rounded-3">
                   <option value="Games for children">Games for children</option>
                   <option value="Classic games">Classic games</option>
                   <option value="Family games">Family games</option>
                   <option value="Strategic games">Strategic games</option>
                 </select>
               </div>
-                  </form>
-                    <form>
               <div class="mb-3 form-check">
-                <label for="floatingInput">Game Availability</label>
-                <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
-                        id="floatingInput">
+                <label>Game Availability</label>
+                <select v-model="updatedGame.availability" class="form-control rounded-3">
                   <option :value="true">Available</option>
                   <option :value="false">Not available</option>
                 </select>
@@ -78,24 +69,16 @@
             </form>
           </div>
           <div class="modal-footer flex-column gap-2 pb-3 border-top-0">
-            <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes
-            </button>
-            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">Close and
-              lose your changes
-            </button>
+            <button @click="updateGame" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close and lose your changes</button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
-
 <script>
-import axios from "axios";
 import axiosInstance from "@/axiosConfig";
-axios.defaults.withCredentials = true;
-
 export default {
   data() {
     return {
@@ -110,18 +93,17 @@ export default {
         gametype: "",
         availability: "",
       },
+      isAdmin: false, // New property to track if the user is an admin
     };
   },
   mounted() {
     this.fetchGames();
-    if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
-      this.$store.dispatch("fetchRole");
-    }
+    this.checkUserRole();
   },
   methods: {
-    fetchUserRole() {
-      return axiosInstance.get("/api/user/getUserRole");
+    checkUserRole() {
+      const role = localStorage.getItem("userRole");
+      this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
     },
     fetchGames() {
       axiosInstance
@@ -135,29 +117,31 @@ export default {
     },
     deleteGame(id) {
       axiosInstance
-          .delete(`${this.api}/deleteGameById/${id}`).then(() => {
-        this.fetchGames();
-      });
+          .delete(`${this.api}/deleteGameById/${id}`)
+          .then(() => {
+            this.fetchGames();
+          });
     },
     openModal(game) {
       this.currentGame = game;
-      this.updatedGame = {gamename: game.gamename, description: game.description, gametype: game.gametype, location: game.location, availability: game.availability};
-      this.isModalVisible = true; // Show modal
+      this.updatedGame = { ...game }; // Spread operator to copy game properties
+      this.isModalVisible = true;
     },
     closeModal() {
-      this.isModalVisible = false; // Hide modal
+      this.isModalVisible = false;
     },
     updateGame() {
       axiosInstance
           .put(`${this.api}/updateGame/${this.currentGame.id}`, this.updatedGame)
           .then((res) => {
-            console.log('Game updated:', res.data);
+            console.log("Game updated:", res.data);
             this.fetchGames();
-            this.updatedGame = {gamename: '', description: '', gametype: '', location: '', availability: ''};
             this.closeModal();
           })
-          .catch(console.error)
-    }
+          .catch((error) => {
+            console.error("Error updating game:", error);
+          });
+    },
   },
 };
 </script>

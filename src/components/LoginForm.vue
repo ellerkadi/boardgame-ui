@@ -58,6 +58,7 @@ export default {
             localStorage.setItem('loggedInUser', JSON.stringify({ username: this.username }));
             this.$emit('login', response.data.username);
             console.log("auth token : " + localStorage.getItem('authToken'));
+            localStorage.setItem('userRole', response.data.role); //saving user role
 
             //this.$store.dispatch('login', {
             //  role: response.data.role
