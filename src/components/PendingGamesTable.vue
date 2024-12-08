@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isAdmin">
     <h2>Pending games for admin to approve or reject</h2>
     <table>
       <thead>
@@ -38,19 +38,27 @@ export default {
     return {
       api: "http://localhost:8082/api/boardgame",
       pendingGames: [],
+      isAdmin: false, // Tracks if the user is an admin
     };
   },
   mounted() {
+    this.checkUserRole();
     this.fetchPendingGames();
   },
   methods: {
+    checkUserRole() {
+      const role = localStorage.getItem("userRole");
+      this.isAdmin = role === "admin"; // Set isAdmin to true if the user is an admin
+    },
     fetchPendingGames() {
-      axiosInstance
-          .get(`${this.api}/pendingGames`)
-          .then((response) => {
-            this.pendingGames = response.data;
-          })
-          .catch(console.error);
+      if (this.isAdmin) {
+        axiosInstance
+            .get(`${this.api}/pendingGames`)
+            .then((response) => {
+              this.pendingGames = response.data;
+            })
+            .catch(console.error);
+      }
     },
     approveGame(id) {
       axiosInstance
