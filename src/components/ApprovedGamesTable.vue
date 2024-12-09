@@ -19,6 +19,7 @@
         <td>{{ game.gametype }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
+
         <td v-if="isAdmin"> <!-- if role is admin then show. -->
           <button @click="openModal(game)">Change</button>
           <button @click="deleteGame(game.id)">Remove</button>
@@ -98,12 +99,17 @@ export default {
   },
   mounted() {
     this.fetchGames();
+    if (localStorage.getItem('authToken')) {
+      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
+      this.$store.dispatch("fetchRole");
+    }
     this.checkUserRole();
+    console.log("isAdmin:", this.isAdmin);
   },
   methods: {
     checkUserRole() {
       const role = localStorage.getItem("userRole");
-      this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
+      this.isAdmin = role === "admin" && this.isLoggedIn; // Ensure the user is logged in
     },
     fetchGames() {
       axiosInstance
