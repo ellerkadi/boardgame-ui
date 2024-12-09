@@ -125,7 +125,7 @@ export default {
       if (availability === "") {
         this.findGameByAvailabilityResult = [];
       } else {
-        this.fetchFindGameByAvailability(availability === 'true');
+        this.fetchFindGameByAvailability(availability === 'true' ? "Available" : "Not Available");
       }
     },
 

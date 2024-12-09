@@ -1,7 +1,6 @@
 <template>
-  <div class="button-container">
-    <button @click="goToHomePage">Home</button>
-    <LogoutButton/>
+  <div>
+    <MainNavbar />
   </div>
   <div>
     <UserGames/>
@@ -15,11 +14,11 @@
 <script>
 import UserGames from "@/components/UserGames.vue";
 import AddGameForm from '@/components/AddGameForm.vue';
-import LogoutButton from "@/components/LogoutButton.vue";
+import MainNavbar from "@/components/Navbar.vue";
 
 export default {
   components: {
-    LogoutButton,
+    MainNavbar,
     UserGames,
     AddGameForm
   },
