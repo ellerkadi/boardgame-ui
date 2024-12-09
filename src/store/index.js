@@ -46,9 +46,10 @@ const store = createStore({
         },
         logout({ commit }) {
             commit('setIsLoggedIn', false);
-            commit('setRole', '');
             localStorage.removeItem('authToken');
             localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('userRole');
+            localStorage.clear();
         },
     },
 });
