@@ -9,7 +9,8 @@
         <th>Game Type</th>
         <th>Location</th>
         <th>Availability</th>
-        <th v-if="isAdmin">Actions</th>
+        <th v-if="isAdmin">Action</th>
+        <th v-if="isUser || isAdmin">Action</th>
       </tr>
       </thead>
       <tbody>
@@ -24,13 +25,28 @@
           <button @click="openModal(game)">Change</button>
           <button @click="deleteGame(game.id)">Remove</button>
         </td>
+        <td v-if="isUser || isAdmin"> <!-- if role is user then show. -->
+          <button @click="openContactModal()">Contact</button>
+        </td>
       </tr>
       </tbody>
     </table>
 
-    <div v-if="isModalVisible" class="modal fade show" tabindex="-1" role="dialog" id="modalSheet"
-         style="display: block;">
-      <div class="modal-dialog modal-xl" role="document">
+    <div v-if= "isContactModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="modalChoice">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-3 shadow">
+          <div class="modal-body p-4 text-center">
+            <button @click="closeContactModal" type="button" class="btn-close"
+                    aria-label="Close"></button>
+            <h5 class="mb-0">Get in touch with the game owner</h5>
+            <p class="mb-0">Game owner email address:  </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="isModalVisible" class="modal fade show" tabindex="-1" role="dialog" id="modalChoice">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content rounded-4 shadow">
           <div class="modal-header border-bottom-0">
             <h1 class="modal-title fs-5">Change Game</h1>
@@ -78,6 +94,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import axiosInstance from "@/axiosConfig";
 export default {
@@ -86,6 +103,7 @@ export default {
       api: "http://localhost:8082/api/boardgame",
       approvedGames: [],
       isModalVisible: false,
+      isContactModalVisible: false,
       currentGame: null,
       updatedGame: {
         gamename: "",
@@ -95,21 +113,20 @@ export default {
         availability: "",
       },
       isAdmin: false, // New property to track if the user is an admin
+      token: false,
+      isUser: false,
     };
   },
   mounted() {
     this.fetchGames();
-    if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
-      this.$store.dispatch("fetchRole");
-    }
-    this.checkUserRole();
-    console.log("isAdmin:", this.isAdmin);
+   this.checkUserRole();
   },
   methods: {
     checkUserRole() {
+      const token = localStorage.getItem("authToken");
       const role = localStorage.getItem("userRole");
-      this.isAdmin = role === "admin" && this.isLoggedIn; // Ensure the user is logged in
+      this.isAdmin = token && role === "admin"; // Only set isAdmin if the user is logged in and has the admin role
+      this.isUser = token && role === "user";
     },
     fetchGames() {
       axiosInstance
@@ -135,6 +152,13 @@ export default {
     },
     closeModal() {
       this.isModalVisible = false;
+    },
+    openContactModal() {
+      console.log("Opening modal");
+      this.isContactModalVisible = true;
+    },
+    closeContactModal() {
+      this.isContactModalVisible = false;
     },
     updateGame() {
       axiosInstance

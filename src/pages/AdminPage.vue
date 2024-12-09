@@ -1,14 +1,19 @@
 <template>
   <div>
+    <MainNavbar />
+  </div>
+  <div>
     <PendingGamesTable/>
   </div>
 </template>
 
 <script>
 import PendingGamesTable from "@/components/PendingGamesTable.vue";
+import MainNavbar from "@/components/Navbar.vue";
 
 export default {
   components: {
+    MainNavbar,
     PendingGamesTable
   },
   data() {
