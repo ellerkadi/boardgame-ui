@@ -5,7 +5,13 @@
       <input type="text" v-model="username" placeholder="Username" required />
       <input type="password" v-model="password" placeholder="Password" required />
       <input type="text" v-model="name" placeholder="First name" required />
-      <input type="text" v-model="email" placeholder="Email" required />
+      <input
+          type="text"
+          v-model="email"
+          placeholder="Email"
+          required
+      />
+      <p v-if="emailError" class="error">{{ emailError }}</p>
       <button type="submit">Register</button>
     </form>
     <p>
@@ -29,10 +35,17 @@ export default {
       email: '',
       role: '',
       message: '',
+      emailError: '', // New property for email validation error
     };
   },
   methods: {
     async register() {
+      if (!this.validateEmail(this.email)) {
+        this.emailError = 'Please enter a valid email address.';
+        return;
+      }
+      this.emailError = '';
+
       try {
         const response = await axios.post(`${this.api}/register`, {
           name: this.name,
@@ -46,6 +59,11 @@ export default {
         this.message = error.response?.data.message || 'Registration failed!';
         console.error(error);
       }
+    },
+    validateEmail(email) {
+      const emailRegex =
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
     },
     goToLogin() {
       this.$router.push('/login');

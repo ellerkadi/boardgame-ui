@@ -29,8 +29,8 @@
     />
     <label for="availability">Availability</label>
     <select v-model="newGame.availability" id="availability" required>
-      <option :value="true">Available</option>
-      <option :value="false">Not available</option>
+      <option value="Available">Available</option>
+      <option value="Not Available">Not Available</option>
     </select>
     <button>Add</button>
   </form>

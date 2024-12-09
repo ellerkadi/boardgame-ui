@@ -26,7 +26,7 @@
           <button @click="deleteGame(game.id)">Remove</button>
         </td>
         <td v-if="isUser || isAdmin"> <!-- if role is user then show. -->
-          <button @click="openContactModal()">Contact</button>
+          <button @click="openContactModal(game.id)">Contact</button>
         </td>
       </tr>
       </tbody>
@@ -39,7 +39,7 @@
             <button @click="closeContactModal" type="button" class="btn-close"
                     aria-label="Close"></button>
             <h5 class="mb-0">Get in touch with the game owner</h5>
-            <p class="mb-0">Game owner email address:  </p>
+            <p class="mb-0">Game owner email address: {{ userEmail }} </p>
           </div>
         </div>
       </div>
@@ -115,6 +115,7 @@ export default {
       isAdmin: false, // New property to track if the user is an admin
       token: false,
       isUser: false,
+      userEmail: ""
     };
   },
   mounted() {
@@ -153,9 +154,9 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     },
-    openContactModal() {
-      console.log("Opening modal");
+    openContactModal(id) {
       this.isContactModalVisible = true;
+      this.fetchUserByGameId(id)
     },
     closeContactModal() {
       this.isContactModalVisible = false;
@@ -171,6 +172,14 @@ export default {
           .catch((error) => {
             console.error("Error updating game:", error);
           });
+    },
+    fetchUserByGameId(id){
+      axiosInstance
+          .get(`${this.api}/getUserByGame/${id}`)
+          .then((res) => {
+            this.userEmail = res.data.email;
+           console.log( res.data.email)
+          })
     },
   },
 };
