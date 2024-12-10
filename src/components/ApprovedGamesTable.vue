@@ -6,7 +6,7 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Game Type</th>
+        <th>Game Types</th>
         <th>Location</th>
         <th>Availability</th>
         <th v-if="isAdmin">Action</th>
@@ -17,7 +17,7 @@
       <tr v-for="game in approvedGames" :key="game.id">
         <td>{{ game.gamename }}</td>
         <td>{{ game.description }}</td>
-        <td>{{ game.gametype }}</td>
+        <td>{{ game.gametypes }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
 
@@ -54,53 +54,86 @@
       </div>
     </div>
 
-    <div v-if="isModalVisible" class="modal fade show" tabindex="-1" role="dialog" id="modalChoice">
-    <div class="modal-dialog modal-xl" role="document">
+    <div v-if="isModalVisible" class="modal fade show" tabindex="-1" role="dialog" id="modalSheet"
+         style="display: block;">
+      <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content rounded-4 shadow">
           <div class="modal-header border-bottom-0">
             <h1 class="modal-title fs-5">Change Game</h1>
             <button @click="closeModal" type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                    aria-label="Close"></button> <!-- x button to close -->
           </div>
           <div class="modal-body py-0">
             <form>
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3"
+                <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Game Name">
               </div>
+            </form>
+            <form>
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.description" type="text" class="form-control rounded-3"
+                <input v-model="updatedGame.description" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Description">
               </div>
+            </form>
+            <form>
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.location" type="text" class="form-control rounded-3"
+                <input v-model="updatedGame.location" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Location">
               </div>
+            </form>
+            <form>
               <div class="mb-3 form-check">
-                <label>Game Type</label>
-                <select v-model="updatedGame.gametype" class="form-control rounded-3">
+                <label for="floatingInput">Game Type</label>
+                <select v-model="updatedGame.gametypes" class="form-control rounded-3" id="floatingInput" required multiple>
                   <option value="Games for children">Games for children</option>
                   <option value="Classic games">Classic games</option>
                   <option value="Family games">Family games</option>
                   <option value="Strategic games">Strategic games</option>
+                  <option value="Educational games">Educational games</option>
+                  <option value="Casual games">Casual games</option>
+                  <option value="Party games">Party games</option>
+                  <option value="Outdoor games">Outdoor games</option>
+                  <option value="Quick games">Quick games</option>
                 </select>
               </div>
+            </form>
+            <form>
               <div class="mb-3 form-check">
-                <label>Game Availability</label>
-                <select v-model="updatedGame.availability" class="form-control rounded-3">
+                <label for="floatingInput">Game Availability</label>
+                <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
+                        id="floatingInput">
+                  <option disabled value="">-- Select one --</option>
                   <option :value="true">Available</option>
                   <option :value="false">Not available</option>
                 </select>
               </div>
             </form>
+            <form>
+              <img
+                  v-if="currentGame && currentGame.picture"
+                  :src="currentGame.picture"
+                  alt="Game Image"
+                  class="img-fluid mb-3"
+                  style="max-width: 200px; border-radius: 8px;"
+              >
+              <div class="mb-3 form-check">
+                <input v-model="updatedGame.picture" type="text" class="form-control rounded-3" id="floatingInput"
+                       placeholder="Picture">
+              </div>
+            </form>
           </div>
           <div class="modal-footer flex-column gap-2 pb-3 border-top-0">
-            <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes</button>
-            <button @click="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close and lose your changes</button>
+            <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes
+            </button>
+            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">Close and
+              lose your changes
+            </button>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -118,9 +151,10 @@ export default {
         gamename: "",
         description: "",
         location: "",
-        gametype: "",
+        gametypes: "",
         availability: "",
         picture: "",
+        arrayGametypes: ""
       },
       isAdmin: false, // New property to track if the user is an admin
       token: false,
@@ -143,8 +177,12 @@ export default {
     fetchGames() {
       axiosInstance
           .get(`${this.api}/approvedGames`)
-          .then((response) => {
-            this.approvedGames = response.data;
+          .then((res) => {
+            this.approvedGames = res.data;
+            this.approvedGames.forEach((game) => {
+              game.formattedGametypes = game.gametypes.join(", ");
+              console.log("Formatted gametypes:", game.formattedGametypes);
+            });
           })
           .catch((error) => {
             console.error("Error fetching games:", error);
@@ -158,11 +196,9 @@ export default {
           });
     },
     openModal(game) {
-      console.log("Opening modal for game:", game);
       this.currentGame = game;
-      this.updatedGame = {gamename: game.gamename, description: game.description, gametype: game.gametype, location: game.location, availability: game.availability};
+      this.updatedGame = {gamename: game.gamename, description: game.description, gametypes: game.arrayGametypes, location: game.location, availability: game.availability, picture: game.picture};
       this.isModalVisible = true;
-      console.log(this.isModalVisible)
     },
     closeModal() {
       console.log("Closing modal")
@@ -182,7 +218,7 @@ export default {
           .then((res) => {
             console.log("Game updated:", res.data);
             this.fetchGames();
-            this.updatedGame = {gamename: '', description: '', gametype: '', location: '', availability: ''};
+            this.updatedGame = {gamename: '', description: '', gametypes: '', location: '', availability: '', picture: ''};
             this.closeModal();
           })
           .catch((error) => {

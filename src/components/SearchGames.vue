@@ -1,8 +1,15 @@
 <template>
     <div class="search-bar-container">
     <h3>Search Game</h3>
-    <input type="text" id="searchGameInput" placeholder="Enter game name"/>
-    <button @click="findGameByGamename">Search</button>
+    <div class="search-bar">
+      <input
+          type="text"
+          id="searchGameInput"
+          placeholder="Enter game name"
+          class="search-input"
+      />
+      <button @click="findGameByGamename" class="search-button">Search</button>
+    </div>
 
     <thead v-if="findGameByGamenameResult.length > 0">
     <tr>
@@ -18,7 +25,7 @@
     <tr>
       <td>{{ game.gamename }}</td>
       <td>{{ game.description }}</td>
-      <td>{{ game.gametype }}</td>
+      <td>{{ game.gametypes }}</td>
       <td>{{ game.location }}</td>
       <td>{{ game.availability }}</td>
     </tr>
@@ -44,7 +51,7 @@
       <tr>
         <td>{{ game.gamename }}</td>
         <td>{{ game.description }}</td>
-        <td>{{ game.gametype }}</td>
+        <td>{{ game.gametypes }}</td>
         <td>{{ game.location }}</td>
       </tr>
       </tbody>
@@ -56,6 +63,11 @@
       <option value="Classic games">Classic games</option>
       <option value="Family games">Family games</option>
       <option value="Strategic games">Strategic games</option>
+      <option value="Educational games">Educational games</option>
+      <option value="Casual games">Casual games</option>
+      <option value="Party games">Party games</option>
+      <option value="Outdoor games">Outdoor games</option>
+      <option value="Quick games">Quick games</option>
     </select>
 
     <table>

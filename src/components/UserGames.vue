@@ -16,7 +16,7 @@
       <tr v-for="game in UserGames" :key="game.id">
         <td>{{ game.gamename }}</td>
         <td>{{ game.description }}</td>
-        <td>{{ game.gametype }}</td>
+        <td>{{ game.gametypes }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>
@@ -31,8 +31,8 @@
          style="display: block;">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content rounded-4 shadow">
-          <div class="modal-header border-bottom-0"> <!-- title name -->
-            <h1 class="modal-title fs-5">Change Game</h1> <!-- title name -->
+          <div class="modal-header border-bottom-0">
+            <h1 class="modal-title fs-5">Change Game</h1>
             <button @click="closeModal" type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button> <!-- x button to close -->
           </div>
@@ -58,11 +58,17 @@
             <form>
               <div class="mb-3 form-check">
                 <label for="floatingInput">Game Type</label>
-                <select v-model="updatedGame.gametype" type="option" class="form-control rounded-3" id="floatingInput">
-                  <option value="Games for children">Games for children</option>
-                  <option value="Classic games">Classic games</option>
-                  <option value="Family games">Family games</option>
-                  <option value="Strategic games">Strategic games</option>
+                <select v-model="updatedGame.gametypes" class="form-control rounded-3" id="floatingInput" required multiple>
+                  <option disabled value="">-- Select at least one gametype --</option>
+                    <option value="Games for children">Games for children</option>
+                    <option value="Classic games">Classic games</option>
+                    <option value="Family games">Family games</option>
+                    <option value="Strategic games">Strategic games</option>
+                    <option value="Educational games">Educational games</option>
+                    <option value="Casual games">Casual games</option>
+                    <option value="Party games">Party games</option>
+                    <option value="Outdoor games">Outdoor games</option>
+                    <option value="Quick games">Quick games</option>
                 </select>
               </div>
             </form>
@@ -71,9 +77,23 @@
                 <label for="floatingInput">Game Availability</label>
                 <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
                         id="floatingInput">
+                  <option disabled value="">-- Select one --</option>
                   <option :value="true">Available</option>
                   <option :value="false">Not available</option>
                 </select>
+              </div>
+            </form>
+            <form>
+              <img
+                  v-if="currentGame && currentGame.picture"
+                  :src="currentGame.picture"
+                  alt="Game Image"
+                  class="img-fluid mb-3"
+                  style="max-width: 200px; border-radius: 8px;"
+              >
+              <div class="mb-3 form-check">
+                <input v-model="updatedGame.picture" type="text" class="form-control rounded-3" id="floatingInput"
+                       placeholder="Picture">
               </div>
             </form>
           </div>
@@ -105,9 +125,10 @@ export default {
         gamename: "",
         description: "",
         location: "",
-        gametype: "",
+        gametypes: "",
         availability: "",
-        //username: '' ,
+        arrayGametypes: "",
+        picture: ""
        },
     };
   },
@@ -134,7 +155,7 @@ export default {
     },
     openModal(game) {
       this.currentGame = game;
-      this.updatedGame = {gamename: game.gamename, description: game.description, gametype: game.gametype, location: game.location, availability: game.availability};
+      this.updatedGame = {gamename: game.gamename, description: game.description, gametypes: game.arrayGametypes, location: game.location, availability: game.availability, picture: game.picture};
       this.isModalVisible = true; // Show modal
     },
     closeModal() {
@@ -146,7 +167,7 @@ export default {
           .then((res) => {
             console.log('Game updated:', res.data);
             this.fetchGames();
-            this.updatedGame = {gamename: '', description: '', gametype: '', location: '', availability: ''};
+            this.updatedGame = {gamename: '', description: '', gametypes: '', location: '', availability: '', picture: ''};
             this.closeModal();
           })
           .catch(console.error)
