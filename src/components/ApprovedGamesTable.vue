@@ -95,7 +95,7 @@
             </form>
           </div>
           <div class="modal-footer flex-column gap-2 pb-3 border-top-0">
-            <button @click="updateGame" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes</button>
             <button @click="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close and lose your changes</button>
           </div>
         </div>
@@ -160,7 +160,7 @@ export default {
     openModal(game) {
       console.log("Opening modal for game:", game);
       this.currentGame = game;
-      this.updatedGame = { ...game }; // Spread operator to copy game properties
+      this.updatedGame = {gamename: game.gamename, description: game.description, gametype: game.gametype, location: game.location, availability: game.availability};
       this.isModalVisible = true;
       console.log(this.isModalVisible)
     },
@@ -182,6 +182,7 @@ export default {
           .then((res) => {
             console.log("Game updated:", res.data);
             this.fetchGames();
+            this.updatedGame = {gamename: '', description: '', gametype: '', location: '', availability: ''};
             this.closeModal();
           })
           .catch((error) => {
