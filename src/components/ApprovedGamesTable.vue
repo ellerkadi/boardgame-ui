@@ -36,10 +36,19 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-3 shadow">
           <div class="modal-body p-4 text-center">
+            <br>
+            <img
+                v-if="currentGame && currentGame.picture"
+                :src="currentGame.picture"
+                alt="Game Image"
+                class="img-fluid mb-3"
+                style="max-width: 200px; border-radius: 8px;"
+            >
             <button @click="closeContactModal" type="button" class="btn-close"
                     aria-label="Close"></button>
             <h5 class="mb-0">Get in touch with the game owner</h5>
-            <p class="mb-0">Game owner email address: {{ userEmail }} </p>
+            <p class="mb-0">Name: {{ userName }} </p>
+            <p class="mb-0">Email: {{ userEmail }} </p>
           </div>
         </div>
       </div>
@@ -111,11 +120,13 @@ export default {
         location: "",
         gametype: "",
         availability: "",
+        picture: "",
       },
       isAdmin: false, // New property to track if the user is an admin
       token: false,
       isUser: false,
-      userEmail: ""
+      userEmail: "",
+      userName: ""
     };
   },
   mounted() {
@@ -160,6 +171,7 @@ export default {
     openContactModal(id) {
       this.isContactModalVisible = true;
       this.fetchUserByGameId(id)
+      this.currentGame = this.approvedGames.find(game => game.id === id);
     },
     closeContactModal() {
       this.isContactModalVisible = false;
@@ -180,8 +192,10 @@ export default {
       axiosInstance
           .get(`${this.api}/getUserByGame/${id}`)
           .then((res) => {
-            this.userEmail = res.data.email;
+           this.userEmail = res.data.email;
            console.log( res.data.email)
+           this.userName = res.data.name;
+           console.log( res.data.name)
           })
     },
   },
