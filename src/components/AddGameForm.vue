@@ -32,6 +32,11 @@
       <option value="Available">Available</option>
       <option value="Not Available">Not Available</option>
     </select>
+    <input
+        type="text"
+        v-model="newGame.picture"
+        placeholder="Picture URL"
+    />
     <button>Add</button>
   </form>
   <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
@@ -51,6 +56,7 @@ export default {
         gametype: "",
         availability: "",
         status: "PENDING",
+        picture: "",
         user: { username: '' },
       },
       successMessage: '',
