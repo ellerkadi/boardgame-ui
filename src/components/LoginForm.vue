@@ -37,11 +37,7 @@ export default {
       isLoggedIn: false
     };
   },
-  /*computed: {
-    userRole() {
-      return this.$store.state.role; // Access role from Vuex store
-    },
-  },*/
+
   methods: {
     login() {
       axiosInstance.post('/auth/login', {
@@ -60,9 +56,6 @@ export default {
             console.log("auth token : " + localStorage.getItem('authToken'));
             localStorage.setItem('userRole', response.data.role); //saving user role
 
-            //this.$store.dispatch('login', {
-            //  role: response.data.role
-            //});
 
             const redirectTo = this.$route.query.redirect || '/home-page';
             this.$router.push(redirectTo).catch((err) => {

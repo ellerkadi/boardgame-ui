@@ -147,11 +147,14 @@ export default {
           });
     },
     openModal(game) {
+      console.log("Opening modal for game:", game);
       this.currentGame = game;
       this.updatedGame = { ...game }; // Spread operator to copy game properties
       this.isModalVisible = true;
+      console.log(this.isModalVisible)
     },
     closeModal() {
+      console.log("Closing modal")
       this.isModalVisible = false;
     },
     openContactModal(id) {
