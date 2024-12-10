@@ -18,7 +18,7 @@
       Already have an account?
       <button @click="goToLogin">Login</button>
     </p>
-    <p>{{ message }}</p>
+    <p v-if="message" :class="{ success: isSuccess, error: !isSuccess }">{{ message }}</p>
   </div>
 </template>
 
@@ -36,25 +36,45 @@ export default {
       role: '',
       message: '',
       emailError: '', // New property for email validation error
+      isSuccess: false,
     };
   },
   methods: {
     async register() {
-      if (!this.validateEmail(this.email)) {
+      if (!this.validateEmail(this.email)) { //Validating email
         this.emailError = 'Please enter a valid email address.';
         return;
       }
       this.emailError = '';
 
       try {
-        const response = await axios.post(`${this.api}/register`, {
+        await axios.post(`${this.api}/register`, {
           name: this.name,
           username: this.username,
           password: this.password,
           email: this.email,
           role: 'user',
         });
-        this.message = response.data;
+        console.log ("Registration successful")
+        const loginResponse = await axios.post(`${this.api}/login`, {
+          username: this.username,
+          password: this.password,
+        });
+
+        // Store the token and user role in localStorage
+        const token = loginResponse.data.token;
+        localStorage.setItem('authToken', token);
+        this.isLoggedIn = true;
+        this.loggedInUser = this.username;
+        localStorage.setItem('loggedInUser', JSON.stringify({ username: this.username }));
+        this.$emit('login', loginResponse.data.username);
+        console.log("auth token : " + localStorage.getItem('authToken'));
+        localStorage.setItem('userRole', loginResponse.data.role);
+        // Redirect the user to their home page
+        const redirectTo = this.$route.query.redirect || '/home-page';
+        this.$router.push(redirectTo).catch((err) => {
+          console.error('Routing error:', err);
+        });
       } catch (error) {
         this.message = error.response?.data.message || 'Registration failed!';
         console.error(error);

@@ -30,10 +30,6 @@ export default {
       const role = localStorage.getItem("userRole");
       this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
     },
-  //  checkUserName() {
-  //    const name = localStorage.getItem("userName");
-  //    this.name = name;
-  //  },
   },
   mounted() {
     if (localStorage.getItem('authToken')) {

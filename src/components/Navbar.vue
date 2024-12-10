@@ -28,6 +28,8 @@
           <li class="nav-item">
             <LogoutButton />
           </li>
+
+
         </ul>
       </div>
     </div>
@@ -37,6 +39,7 @@
 <script>
 
 import LogoutButton from "@/components/LogoutButton.vue";
+// import axiosInstance from "@/axiosConfig";
 
 export default {
   name: 'MainNavbar',
@@ -47,6 +50,7 @@ export default {
     return {
       api: "http://localhost:8082/api/boardgame",
       isAdmin: false,
+     // userName: ""
     };
   },
   methods: {
@@ -66,6 +70,14 @@ export default {
     goToAdminPage() {
       this.$router.push('/admin-page');
     },
+  //  fetchUserByGameId(id){
+  //    axiosInstance
+  //        .get(`${this.api}/getUserByGame/${id}`)
+  //        .then((res) => {
+  //          this.userName = res.data.name;
+  //          console.log( res.data.name)
+  //        })
+  //  },
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
