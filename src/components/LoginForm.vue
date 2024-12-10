@@ -54,7 +54,9 @@ export default {
             localStorage.setItem('loggedInUser', JSON.stringify({ username: this.username }));
             this.$emit('login', response.data.username);
             console.log("auth token : " + localStorage.getItem('authToken'));
-            localStorage.setItem('userRole', response.data.role); //saving user role
+            localStorage.setItem('userRole', response.data.role);//saving user role
+            localStorage.setItem('userName', response.data.name);//saving user role
+
 
 
             const redirectTo = this.$route.query.redirect || '/home-page';

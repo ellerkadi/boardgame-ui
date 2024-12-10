@@ -9,8 +9,8 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto"> <!-- ms-auto for right alignment -->
-          <li class="nav-item">
-            <p>Hello, {{ userName }}</p>
+          <li v-if="isUser" class="nav-item">
+            <p>Hello, {{ userName }} ! </p>
           </li>
 
           <li class="nav-item">
@@ -43,7 +43,6 @@
 <script>
 
 import LogoutButton from "@/components/LogoutButton.vue";
-import axiosInstance from "@/axiosConfig";
 
 export default {
   name: 'MainNavbar',
@@ -55,12 +54,15 @@ export default {
       api: "http://localhost:8082/api/boardgame",
       isAdmin: false,
       userName: "",
+      isUser: false,
     };
   },
   methods: {
     checkUserRole() {
       const role = localStorage.getItem("userRole");
       this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
+      this.userName = localStorage.getItem('userName')
+      this.isUser = role === "user";
     },
     goToLogin() {
       this.$router.push('/login');
@@ -74,25 +76,13 @@ export default {
     goToAdminPage() {
       this.$router.push('/admin-page');
     },
-    fetchUserByGameId(id){
-      axiosInstance
-          .get(`${this.api}/getUserByGame/${id}`)
-          .then((res) => {
-            this.userName = res.data.name;
-            console.log( res.data.name)
-          })
-    },
+
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
       this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
       this.checkUserRole();
-      const id = localStorage.getItem("id");
-      if(id) {
-      this.fetchUserByGameId(id);
-      } else {
-        console.error("User ID not found");
-      }
+
     }
   },
 };

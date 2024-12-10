@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div class="search-bar-container">
     <h3>Search Game</h3>
     <input type="text" id="searchGameInput" placeholder="Enter game name"/>
     <button @click="findGameByGamename">Search</button>

@@ -87,14 +87,12 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import axiosInstance from "@/axiosConfig";
-axios.defaults.withCredentials = true;
+
 
 export default {
   data() {
