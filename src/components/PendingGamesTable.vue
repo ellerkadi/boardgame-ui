@@ -16,7 +16,7 @@
       <tr v-for="game in pendingGames" :key="game.id">
         <td>{{ game.gamename }}</td>
         <td>{{ game.description }}</td>
-        <td>{{ game.gametype }}</td>
+        <td>{{ game.gametypes }}</td>
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>

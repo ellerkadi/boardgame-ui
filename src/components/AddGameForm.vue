@@ -14,12 +14,17 @@
         placeholder="Description"
         required
     />
-    <label for="gametype">Game type</label>
-    <select v-model="newGame.gametype" id="gametype" required>
+    <label for="gametypes">Game types</label>
+    <select v-model="newGame.gametypes" id="gametypes" required multiple>
       <option value="Games for children">Games for children</option>
       <option value="Classic games">Classic games</option>
       <option value="Family games">Family games</option>
       <option value="Strategic games">Strategic games</option>
+      <option value="Educational games">Educational games</option>
+      <option value="Casual games">Casual games</option>
+      <option value="Party games">Party games</option>
+      <option value="Party games">Outdoor games</option>
+      <option value="Party games">Quick games</option>
     </select>
     <input
         type="text"
@@ -53,7 +58,7 @@ export default {
         gamename: "",
         description: "",
         location: "",
-        gametype: "",
+        gametypes: "",
         availability: "",
         status: "PENDING",
         picture: "",
@@ -90,7 +95,7 @@ export default {
           })
           .then((response) => {
             console.log("Game added successfully:", response.data);
-            this.successMessage = "Game added sucessfully!";
+            this.successMessage = "Game added sucessfully! Game is pending approval, wait for admin to approve.";
           })
           .catch((error) => {
             console.error("Failed to add game:", error.response || error.message);
