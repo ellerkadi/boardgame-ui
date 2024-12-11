@@ -1,15 +1,13 @@
 <template>
-  <div class="auth-container">
-    <div v-if="!isLoggedIn">
+  <div class="auth-container" >
+    <div v-if="!isLoggedIn" id="formauth-div">
       <h2>Login</h2>
       <form @submit.prevent="login">
         <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" v-model="username" required/>
+          <input type="text" id="username" v-model="username" placeholder="Username" required/>
         </div>
         <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required/>
+          <input type="password" id="password" v-model="password" placeholder="Password" required/>
         </div>
         <button type="submit">Login</button>
       </form>
