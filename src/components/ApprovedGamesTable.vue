@@ -26,33 +26,20 @@
           <button @click="deleteGame(game.id)">Remove</button>
         </td>
         <td v-if="isUser || isAdmin"> <!-- if role is user then show. -->
-          <button @click="openContactModal(game.id)">Contact</button>
+          <button @click="openContactModal(game)">Contact</button>
         </td>
       </tr>
       </tbody>
     </table>
 
-    <div v-if= "isContactModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="modalChoice">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content rounded-3 shadow">
-          <div class="modal-body p-4 text-center">
-            <br>
-            <img
-                v-if="currentGame && currentGame.picture"
-                :src="currentGame.picture"
-                alt="Game Image"
-                class="img-fluid mb-3"
-                style="max-width: 200px; border-radius: 8px;"
-            >
-            <button @click="closeContactModal" type="button" class="btn-close"
-                    aria-label="Close"></button>
-            <h5 class="mb-0">Get in touch with the game owner</h5>
-            <p class="mb-0">Name: {{ userName }} </p>
-            <p class="mb-0">Email: {{ userEmail }} </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ContactModal
+        :is-contact-modal-visible="isContactModalVisible"
+        :currentGame="currentGame"
+        :userName="userName"
+        :userEmail="userEmail"
+        @close="closeContactModal"
+    />
+
 
     <div v-if="isModalVisible" class="modal fade show" tabindex="-1" role="dialog" id="modalSheet"
          style="display: block;">
@@ -133,13 +120,18 @@
         </div>
       </div>
     </div>
-
   </div>
+
 </template>
 
 <script>
 import axiosInstance from "@/axiosConfig";
+import ContactModal from "@/components/ContactModal.vue";
+
 export default {
+  components: {
+    ContactModal,
+  },
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
@@ -156,11 +148,11 @@ export default {
         picture: "",
         arrayGametypes: ""
       },
-      isAdmin: false, // New property to track if the user is an admin
+      isAdmin: false,
       token: false,
       isUser: false,
       userEmail: "",
-      userName: ""
+      userName: "",
     };
   },
   mounted() {
@@ -179,10 +171,6 @@ export default {
           .get(`${this.api}/approvedGames`)
           .then((res) => {
             this.approvedGames = res.data;
-            this.approvedGames.forEach((game) => {
-              game.formattedGametypes = game.gametypes.join(", ");
-              console.log("Formatted gametypes:", game.formattedGametypes);
-            });
           })
           .catch((error) => {
             console.error("Error fetching games:", error);
@@ -204,13 +192,25 @@ export default {
       console.log("Closing modal")
       this.isModalVisible = false;
     },
-    openContactModal(id) {
+    openContactModal(game) {
+      console.log("Contact button clicked, game: ", game);   // Add this log
+      this.currentGame = game;
+      this.fetchUserByGameId(game.id);
       this.isContactModalVisible = true;
-      this.fetchUserByGameId(id)
-      this.currentGame = this.approvedGames.find(game => game.id === id);
-    },
+      },
     closeContactModal() {
-      this.isContactModalVisible = false;
+      this.isContactModalVisible = false; // Close the modal
+    },
+    fetchUserByGameId(id){
+      axiosInstance
+          .get(`${this.api}/getUserByGame/${id}`)
+          .then((res) => {
+            this.userEmail = res.data.email;
+            this.userName = res.data.name;
+          })
+          .catch((error) => {
+            console.error("Error fetching user:", error);
+          });
     },
     updateGame() {
       axiosInstance
@@ -224,16 +224,6 @@ export default {
           .catch((error) => {
             console.error("Error updating game:", error);
           });
-    },
-    fetchUserByGameId(id){
-      axiosInstance
-          .get(`${this.api}/getUserByGame/${id}`)
-          .then((res) => {
-           this.userEmail = res.data.email;
-           console.log( res.data.email)
-           this.userName = res.data.name;
-           console.log( res.data.name)
-          })
     },
   },
 };
