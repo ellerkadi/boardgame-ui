@@ -10,7 +10,7 @@
         <th>Location</th>
         <th>Availability</th>
         <th v-if="isAdmin">Action</th>
-        <th v-if="isUser || isAdmin">Action</th>
+        <th v-if="isUser || isAdmin">Rent</th>
       </tr>
       </thead>
       <tbody>
@@ -22,8 +22,10 @@
         <td>{{ game.availability }}</td>
 
         <td v-if="isAdmin"> <!-- if role is admin then show. -->
-          <button @click="openModal(game)">Change</button>
-          <button @click="deleteGame(game.id)">Remove</button>
+          <div class="button-container">
+            <button @click="openModal(game)">Change</button>
+            <button @click="deleteGame(game.id)">Remove</button>
+          </div>
         </td>
         <td v-if="isUser || isAdmin"> <!-- if role is user then show. -->
           <button @click="openContactModal(game)">Contact</button>
@@ -120,6 +122,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 </template>
@@ -157,7 +160,7 @@ export default {
   },
   mounted() {
     this.fetchGames();
-   this.checkUserRole();
+    this.checkUserRole();
   },
   methods: {
     checkUserRole() {
@@ -185,7 +188,14 @@ export default {
     },
     openModal(game) {
       this.currentGame = game;
-      this.updatedGame = {gamename: game.gamename, description: game.description, gametypes: game.arrayGametypes, location: game.location, availability: game.availability, picture: game.picture};
+      this.updatedGame = {
+        gamename: game.gamename,
+        description: game.description,
+        gametypes: game.arrayGametypes,
+        location: game.location,
+        availability: game.availability,
+        picture: game.picture
+      };
       this.isModalVisible = true;
     },
     closeModal() {
@@ -218,7 +228,14 @@ export default {
           .then((res) => {
             console.log("Game updated:", res.data);
             this.fetchGames();
-            this.updatedGame = {gamename: '', description: '', gametypes: '', location: '', availability: '', picture: ''};
+            this.updatedGame = {
+              gamename: '',
+              description: '',
+              gametypes: '',
+              location: '',
+              availability: '',
+              picture: ''
+            };
             this.closeModal();
           })
           .catch((error) => {

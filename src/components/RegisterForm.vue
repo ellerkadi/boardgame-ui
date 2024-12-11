@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="formauth-div">
     <h2>Register</h2>
     <form @submit.prevent="register">
       <input type="text" v-model="username" placeholder="Username" required />

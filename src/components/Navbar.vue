@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Boardgame Rental</a>
 
@@ -25,6 +25,10 @@
             <button @click="goToAdminPage" class="nav-link">Admin page</button>
           </li>
 
+          <li class="nav-item" v-if="$store.state.isLoggedIn">
+            <button @click="goToProfilePage" class="nav-link">Profile</button>
+          </li>
+
           <li class="nav-item" v-if="!$store.state.isLoggedIn">
             <button @click="goToLogin" class="nav-link">Login</button>
           </li>
@@ -32,6 +36,8 @@
           <li class="nav-item">
             <LogoutButton />
           </li>
+
+
         </ul>
       </div>
     </div>
@@ -74,6 +80,11 @@ export default {
     goToAdminPage() {
       this.$router.push('/admin-page');
     },
+
+    goToProfilePage() {
+      this.$router.push('/profile-page');
+    },
+
   },
   mounted() {
     if (localStorage.getItem('authToken')) {

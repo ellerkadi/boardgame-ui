@@ -95,7 +95,7 @@ export default {
           })
           .then((response) => {
             console.log("Game added successfully:", response.data);
-            this.successMessage = "Game added sucessfully! Game is pending approval, wait for admin to approve.";
+            this.successMessage = "Game added successfully! Game is pending approval, wait for admin to approve.";
           })
           .catch((error) => {
             console.error("Failed to add game:", error.response || error.message);

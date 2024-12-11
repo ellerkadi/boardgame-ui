@@ -1,6 +1,6 @@
 <template>
   <div v-if="isAdmin">
-    <h2>Pending games for admin to approve or reject</h2>
+    <h2>Pending games for review</h2>
     <table>
       <thead>
       <tr>

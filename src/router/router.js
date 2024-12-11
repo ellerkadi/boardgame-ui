@@ -11,6 +11,8 @@ import ApprovedGamesTable from '@/components/ApprovedGamesTable.vue';
 import AdminPage from "@/pages/AdminPage.vue";
 import UserPage from "@/pages/UserPage.vue";
 import UserGames from "@/components/UserGames.vue";
+import ProfilePage from "@/pages/ProfilePage.vue";
+import ProfileDetailsForm from "@/components/ProfileDetailsForm.vue";
 
 const routes = [
     { path: '/', redirect: '/home-page' },
@@ -24,6 +26,8 @@ const routes = [
     { path: '/pending-games', component: PendingGamesTable, meta: { requiresAuth: true } },
     { path: '/approved-games', component: ApprovedGamesTable, meta: { requiresAuth: true } },
     { path: '/user-games', component: UserGames, meta: { requiresAuth: true } },
+    { path: '/profile-page', component: ProfilePage, meta: { requiresAuth: true } },
+    { path: '/profile-details', component: ProfileDetailsForm, meta: { requiresAuth: true } },
 ];
 
 const router = createRouter({
