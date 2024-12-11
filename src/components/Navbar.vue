@@ -9,7 +9,7 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto"> <!-- ms-auto for right alignment -->
-          <li v-if="isUser" class="nav-item">
+          <li v-if="isUser || isAdmin" class="nav-item">
             <p>Hello, {{ userName }} ! </p>
           </li>
 
@@ -32,8 +32,6 @@
           <li class="nav-item">
             <LogoutButton />
           </li>
-
-
         </ul>
       </div>
     </div>
@@ -76,7 +74,6 @@ export default {
     goToAdminPage() {
       this.$router.push('/admin-page');
     },
-
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
