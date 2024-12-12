@@ -14,7 +14,9 @@
   </div>
 
   <div class="search-container">
-    <SearchGames @update-approved-games="updateApprovedGames" />
+    <SearchGames @update-approved-games="updateApprovedGames"
+                 @reset-approved-games="fetchAllApprovedGames"
+    />
   </div>
 
   <div>
@@ -50,13 +52,13 @@ export default {
     },
     checkUserRole() {
       const role = localStorage.getItem("userRole");
-      this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
+      this.isAdmin = role === "admin";
     },
     fetchAllApprovedGames() {
       axiosInstance
           .get(`${this.api}/approvedGames`)
           .then((res) => {
-            this.approvedGames = res.data; // Set all games initially
+            this.approvedGames = res.data;
           })
           .catch((error) => {
             console.error("Error fetching all approved games:", error);
@@ -65,9 +67,8 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
+      this.$store.commit('setIsLoggedIn', true);
       this.checkUserRole();
-      //   this.checkUserName();
     }
     this.fetchAllApprovedGames();
   },

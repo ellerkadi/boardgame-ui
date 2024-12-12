@@ -1,5 +1,15 @@
 <template>
-    <div class="search-bar-container">
+  <div class="search-bar-container">
+    <div class="search-bar">
+      <input
+          type="text"
+          id="searchGameInput"
+          placeholder="Enter game name"
+          class="search-input"
+      />
+      <button @click="findGameByGamename" class="search-button">Search</button>
+    </div>
+    <br>
 
     <select id="availabilitySelect" @change="findGameByAvailability" class="small-select">
       <option value="">Select Availability</option>
@@ -19,8 +29,12 @@
       <option value="Outdoor games">Outdoor games</option>
       <option value="Quick games">Quick games</option>
     </select>
+    <div>
+      <button @click="clearFields" class="clear-button" >Clear Fields</button>
+  </div>
 
-    </div>
+  </div>
+
 </template>
 
 <script>
@@ -29,8 +43,7 @@ import axiosInstance from "../axiosConfig.js";
 
 axios.defaults.withCredentials = true;
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
@@ -53,12 +66,27 @@ export default {
     };
   },
   methods: {
+    fetchFindGameByGamename(gamename) {
+      if (!gamename) {
+        console.error("Game name is required to fetch data.");
+        return;
+      }
+      axiosInstance
+          .get(`${this.api}/findGameByGamename/${gamename}`)
+          .then((res) => {
+            console.log("Games found:", res.data);
+            this.$emit("update-approved-games", res.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching games by name:", error);
+          });
+    },
     fetchFindGameByAvailability(availability) {
       axiosInstance
           .get(`${this.api}/findGameByAvailability/${availability}`)
           .then((res) => {
             console.log("Games found:", res.data);
-            this.$emit("update-approved-games", res.data);// Update the table directly
+            this.$emit("update-approved-games", res.data);
           })
           .catch((error) => {
             console.error("Error fetching games by availability:", error);
@@ -69,21 +97,31 @@ export default {
           .get(`${this.api}/findGameByGametype/${gametype}`)
           .then((res) => {
             console.log("Games found:", res.data);
-            this.$emit("update-approved-games", res.data); // Update the table directly
+            this.$emit("update-approved-games", res.data);
           })
           .catch((error) => {
             console.error("Error fetching games by type:", error);
           });
     },
+    findGameByGamename() {
+      const gamename = document.getElementById("searchGameInput").value.trim();
+      this.fetchFindGameByGamename(gamename);
+    },
     findGameByAvailability() {
       const availability = document.getElementById("availabilitySelect").value;
-        this.fetchFindGameByAvailability(availability === 'true' ? "Available" : "Not Available");
+      this.fetchFindGameByAvailability(availability === 'true' ? "Available" : "Not Available");
 
     },
     findGameByGametype() {
       const gametype = document.getElementById("gametypeSelect").value;
-        this.fetchFindGameByGametype(gametype);
-      },
+      this.fetchFindGameByGametype(gametype);
     },
+    clearFields() {
+      document.getElementById("searchGameInput").value = "";
+      document.getElementById("availabilitySelect").value = "";
+      document.getElementById("gametypeSelect").value = "";
+      this.$emit("reset-approved-games");
+  },
+  },
 };
 </script>

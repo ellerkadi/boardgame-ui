@@ -4,60 +4,66 @@
     <form @submit.prevent="addGame" class="d-flex align-items-center mb-4">
 
       <h2>Add new game</h2>
-    <input
-        type="text"
-        v-model="newGame.gamename"
-        placeholder="Name"
-        required
-    />
-    <input
-        type="text"
-        v-model="newGame.description"
-        placeholder="Description"
-        required
-    />
-    <label for="gametypes">Game types</label>
+      <label for="gamename">Name</label>
+      <input
+          type="text"
+          v-model="newGame.gamename"
+          placeholder="Name"
+          required
+      />
+      <label for="gamedescription">Description</label>
+      <input
+          type="text"
+          v-model="newGame.description"
+          placeholder="Description"
+          required
+      />
+      <label for="gamelocation">Location</label>
+      <input
+          type="text"
+          v-model="newGame.location"
+          placeholder="Location"
+          required
+      />
+      <label for="gametypes">Type</label>
       <select
           v-model="newGame.gametypes"
           id="gametypes"
           required
           multiple
           class="custom-selectgame">
-      <option value="Games for children">Games for children</option>
-      <option value="Classic games">Classic games</option>
-      <option value="Family games">Family games</option>
-      <option value="Strategic games">Strategic games</option>
-      <option value="Educational games">Educational games</option>
-      <option value="Casual games">Casual games</option>
-      <option value="Party games">Party games</option>
-      <option value="Outdoor games">Outdoor games</option>
-      <option value="Quick games">Quick games</option>
-    </select>
-    <input
-        type="text"
-        v-model="newGame.location"
-        placeholder="Location"
-        required
-    />
-    <label for="availability">Availability</label>
-    <select v-model="newGame.availability" id="availability" required>
-      <option value="Available">Available</option>
-      <option value="Not Available">Not Available</option>
-    </select>
-    <input
-        type="text"
-        v-model="newGame.picture"
-        placeholder="Picture URL"
-    />
-    <button class="change-button">Add</button>
+        <option value="Games for children">Games for children</option>
+        <option value="Classic games">Classic games</option>
+        <option value="Family games">Family games</option>
+        <option value="Strategic games">Strategic games</option>
+        <option value="Educational games">Educational games</option>
+        <option value="Casual games">Casual games</option>
+        <option value="Party games">Party games</option>
+        <option value="Outdoor games">Outdoor games</option>
+        <option value="Quick games">Quick games</option>
+      </select>
+
+      <label for="availability">Availability</label>
+      <select v-model="newGame.availability" id="availability" required>
+        <option value="Available">Available</option>
+        <option value="Not Available">Not Available</option>
+      </select>
+      <label for="gamepicture">Picture</label>
+      <input
+          type="text"
+          v-model="newGame.picture"
+          placeholder="Picture URL"
+      />
+      <button class="change-button">Add</button>
       <br>
       <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
-  </form>
+    </form>
   </div>
 </template>
 
 <script>
 import axiosInstance from "@/axiosConfig";
+
 axiosInstance.defaults.withCredentials = true;
 
 export default {
@@ -71,7 +77,7 @@ export default {
         availability: "",
         status: "PENDING",
         picture: "",
-        user: { username: '' },
+        user: {username: ''},
       },
       successMessage: '',
       api: "http://localhost:8082/api/boardgame",
