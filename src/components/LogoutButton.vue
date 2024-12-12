@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoggedIn">
-    <button @click="logout">Logout</button>
+    <button class="logout-button" @click="logout">Logout</button>
   </div>
 </template>
 

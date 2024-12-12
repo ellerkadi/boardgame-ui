@@ -5,6 +5,7 @@ import HomePage from '@/pages/HomePage.vue';
 import LoginForm from '@/components/LoginForm.vue';
 import RegisterForm from '@/components/RegisterForm.vue';
 import SearchGames from '@/components/SearchGames.vue';
+import SearchGamesByGamename from '@/components/SearchGamesByGamename.vue';
 import AddGameForm from '@/components/AddGameForm.vue';
 import PendingGamesTable from '@/components/PendingGamesTable.vue';
 import ApprovedGamesTable from '@/components/ApprovedGamesTable.vue';
@@ -22,6 +23,7 @@ const routes = [
     { path: '/register', component: RegisterForm, name: 'Register' },
     { path: '/admin-page', component: AdminPage, name: 'Admin Page' },
     { path: '/search-games', component: SearchGames, meta: { requiresAuth: true } },
+    { path: '/search-games-by-name', component: SearchGamesByGamename, meta: { requiresAuth: true } },
     { path: '/add-game', component: AddGameForm, meta: { requiresAuth: true } },
     { path: '/pending-games', component: PendingGamesTable, meta: { requiresAuth: true } },
     { path: '/approved-games', component: ApprovedGamesTable, meta: { requiresAuth: true } },

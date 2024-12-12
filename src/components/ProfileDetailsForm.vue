@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div><br><br>
     <div id="formauth-div">
+
       <form>
 
         <h2>Change your details</h2>
@@ -43,6 +44,7 @@
         <div v-if="errorMessage" class="alert alert-danger mt-3" role="alert">
           {{ errorMessage }}
         </div>
+        <br>
       </form>
     </div>
   </div>

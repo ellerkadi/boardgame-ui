@@ -1,24 +1,23 @@
 <template>
     <div class="search-bar-container">
-    <h3>Search Game</h3>
-    <div class="search-bar">
-      <input
-          type="text"
-          id="searchGameInput"
-          placeholder="Enter game name"
-          class="search-input"
-      />
-      <button @click="findGameByGamename" class="search-button">Search</button>
-    </div>
-    <br>
+<!--    <div class="search-bar">-->
+<!--      <input-->
+<!--          type="text"-->
+<!--          id="searchGameInput"-->
+<!--          placeholder="Enter game name"-->
+<!--          class="search-input"-->
+<!--      />-->
+<!--      <button @click="findGameByGamename" class="search-button">Search</button>-->
+<!--    </div>-->
+<!--    <br>-->
 
-    <select id="availabilitySelect" @change="findGameByAvailability">
+    <select id="availabilitySelect" @change="findGameByAvailability" class="small-select">
       <option value="">Select Availability</option>
       <option value="true">Available</option>
       <option value="false">Not Available</option>
     </select>
 
-    <select id="gametypeSelect" @change="findGameByGametype">
+    <select id="gametypeSelect" @change="findGameByGametype" class="small-select">
       <option value="">Select Game Type</option>
       <option value="Games for children">Games for children</option>
       <option value="Classic games">Classic games</option>
@@ -78,10 +77,10 @@ export default {
             this.openModal();
           });
     },
-    findGameByGamename() {
-      const gamename = document.getElementById("searchGameInput").value.trim();
-      this.fetchFindGameByGamename(gamename);
-    },
+    // findGameByGamename() {
+    //   const gamename = document.getElementById("searchGameInput").value.trim();
+    //   this.fetchFindGameByGamename(gamename);
+    // },
     openModal() {
       this.isModalVisible = true;
     },

@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <h2>Approved Games</h2>
-    <table>
+
+<br>
+    <div>
+      <table>
       <thead>
       <tr>
         <th>Name</th>

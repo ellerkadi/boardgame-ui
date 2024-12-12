@@ -1,4 +1,7 @@
 <template>
+  <br><br>
+  <br><br>
+  <br><br>
   <div id="formauth-div">
     <h2>Register</h2>
     <form @submit.prevent="register">

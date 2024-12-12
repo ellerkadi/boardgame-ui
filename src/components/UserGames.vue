@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2>Your Games</h2>
+    <h1>Your Games</h1>
+    <br>
     <table>
       <thead>
       <tr>
@@ -20,8 +21,10 @@
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>
+          <div class="button-container">
           <button @click="openModal(game)">Change</button>
           <button @click="deleteGame(game.id)">Remove</button>
+          </div>
         </td>
       </tr>
       </tbody>
