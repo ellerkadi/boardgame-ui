@@ -1,5 +1,5 @@
 <template>
-  <div v-if= "isContactModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="modalChoice">
+  <div v-if="isContactModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="modalChoice">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content rounded-3 shadow">
         <div class="modal-body p-4 text-center">

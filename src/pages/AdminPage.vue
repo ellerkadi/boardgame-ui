@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
+      this.$store.commit('setIsLoggedIn', true);
     }
   },
 };

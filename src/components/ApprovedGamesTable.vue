@@ -42,7 +42,6 @@
         @close="closeContactModal"
     />
 
-
     <div v-if="isModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="modalChoice">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-3 shadow">
@@ -118,8 +117,8 @@
           <div class="modal-footer flex-column gap-2 pb-3 border-top-0">
             <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes
             </button>
-            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">Close and
-              lose your changes
+            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">
+              Close and lose your changes
             </button>
           </div>
         </div>
@@ -171,7 +170,7 @@ export default {
     checkUserRole() {
       const token = localStorage.getItem("authToken");
       const role = localStorage.getItem("userRole");
-      this.isAdmin = token && role === "admin"; // Only set isAdmin if the user is logged in and has the admin role
+      this.isAdmin = token && role === "admin";
       this.isUser = token && role === "user";
     },
     fetchGames() {
@@ -179,9 +178,6 @@ export default {
           .get(`${this.api}/approvedGames`)
           .then((res) => {
             this.$emit("update:approvedGames", res.data);
-          })
-          .catch((error) => {
-            console.error("Error fetching games:", error);
           });
     },
     deleteGame(id) {
@@ -220,16 +216,12 @@ export default {
           .then((res) => {
             this.userEmail = res.data.email;
             this.userName = res.data.name;
-          })
-          .catch((error) => {
-            console.error("Error fetching user:", error);
           });
     },
     updateGame() {
       axiosInstance
           .put(`${this.api}/updateGame/${this.currentGame.id}`, this.updatedGame)
-          .then((res) => {
-            console.log("Game updated:", res.data);
+          .then(() => {
             this.fetchGames();
             this.updatedGame = {
               gamename: '',
@@ -241,7 +233,6 @@ export default {
             };
             this.closeModal();
             this.successMessage = "Details successfully changed!";
-            this.errorMessage = "";
           })
           .catch((error) => {
             console.error("Error updating game:", error);
