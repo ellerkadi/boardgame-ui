@@ -36,7 +36,7 @@
 
           </ul>
           <div>
-            <SearchGamesByGamename/>
+            <SearchGamesByGamename @update-approved-games="updateApprovedGames" />
           </div>
         </div>
       </div>
@@ -48,9 +48,11 @@
 
 import LogoutButton from "@/components/LogoutButton.vue";
 import SearchGamesByGamename from "@/components/SearchGamesByGamename.vue";
+import axiosInstance from "@/axiosConfig";
 
 export default {
   name: 'MainNavbar',
+
   components: {
     SearchGamesByGamename,
     LogoutButton,
@@ -61,9 +63,13 @@ export default {
       isAdmin: false,
       userName: "",
       isUser: false,
+      approvedGames: []
     };
   },
   methods: {
+    updateApprovedGames(games) {
+      this.approvedGames = games; // Update the games array with the search results
+    },
     checkUserRole() {
       const role = localStorage.getItem("userRole");
       this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
@@ -86,14 +92,23 @@ export default {
     goToProfilePage() {
       this.$router.push('/profile-page');
     },
-
+    fetchAllApprovedGames() {
+      axiosInstance
+          .get(`${this.api}/approvedGames`)
+          .then((res) => {
+            this.approvedGames = res.data; // Set all games initially
+          })
+          .catch((error) => {
+            console.error("Error fetching all approved games:", error);
+          });
+    },
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
       this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
       this.checkUserRole();
-
     }
+    this.fetchAllApprovedGames();
   },
 };
 </script>
