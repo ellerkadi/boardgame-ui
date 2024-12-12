@@ -70,6 +70,7 @@ export default {
         this.$emit('login', loginResponse.data.username);
         console.log("auth token : " + localStorage.getItem('authToken'));
         localStorage.setItem('userRole', loginResponse.data.role);
+        localStorage.setItem('userName', loginResponse.data.name);//saving user role
         // Redirect the user to their home page
         const redirectTo = this.$route.query.redirect || '/home-page';
         this.$router.push(redirectTo).catch((err) => {
