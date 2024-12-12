@@ -52,9 +52,7 @@
       <div v-if="successMessage" class="alert alert-success mt-3" role="alert">
         {{ successMessage }}
       </div>
-      <div v-if="errorMessage" class="alert alert-danger mt-3" role="alert">
-        {{ errorMessage }}
-      </div>
+
       <button class="change-button">Add</button>
       <br>
     </form>
@@ -80,26 +78,17 @@ export default {
         user: {username: ''},
       },
       successMessage: '',
-      errorMessage: '',
       api: "http://localhost:8082/api/boardgame",
     };
   },
   methods: {
     addGame() {
       const token = localStorage.getItem("authToken");
-      if (!token) {
-        console.error("Authorization token is missing!");
-        return;
-      }
-
       const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-      console.log('Logged in user:', loggedInUser); // PRINTS IN THE CONSOLE THE CORRECT USER, SO THIS WORKS
-      console.log('Game info is:', this.newGame)
 
       if (loggedInUser && loggedInUser.username) {
-        this.newGame.user.username = loggedInUser.username;  // Username is set here
+        this.newGame.user.username = loggedInUser.username;
       } else {
-        console.error("Logged in user data is missing!");
         return;
       }
 
@@ -110,8 +99,7 @@ export default {
             },
           })
           .then(() => {
-
-            this.successMessage = "Game added successfully! Game is pending approval, wait for admin to approve.";
+            this.successMessage = "Game added successfully! Game is pending approval.";
             this.newGame = {
               gamename: "",
               description: "",
@@ -119,11 +107,8 @@ export default {
               gametypes: [],
               availability: "",
               picture: "",
-              user: { username: '' },
+              user: {username: ''},
             };
-          })
-          .catch((error) => {
-            console.error("Failed to add game:", error.response || error.message);
           });
     },
   },

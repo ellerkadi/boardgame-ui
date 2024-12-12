@@ -48,7 +48,6 @@ export default {
   methods: {
     updateApprovedGames(games) {
       this.approvedGames = games;
-      console.log('Updated approved games:', games)
     },
     checkUserRole() {
       const role = localStorage.getItem("userRole");

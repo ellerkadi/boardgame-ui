@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="header" >
+    <div id="header">
       <div v-if="!$store.state.isLoggedIn" id="userGreeting">
         <button class="logout-button" @click="goToLogin">Login</button>
       </div>
@@ -10,13 +10,12 @@
         <LogoutButton/>
       </div>
       <img src="https://www.upload.ee/image/17499735/Etsy_Shop_Big_Banner__2_.jpg" alt="logo"/>
-<!--      <img src="https://www.upload.ee/image/17499948/1.png" alt="logo"/>-->
     </div>
 
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto"> <!-- ms-auto for right alignment -->
+          <ul class="navbar-nav ms-auto">
 
             <li class="nav-item">
               <button @click="goToHomePage" class="nav-link">Home</button>
@@ -62,7 +61,7 @@ export default {
   methods: {
     checkUserRole() {
       const role = localStorage.getItem("userRole");
-      this.isAdmin = role === "admin"; // Set isAdmin to true if the role is admin
+      this.isAdmin = role === "admin";
       this.userName = localStorage.getItem('userName')
       this.isUser = role === "user";
     },
@@ -85,7 +84,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
+      this.$store.commit('setIsLoggedIn', true);
       this.checkUserRole();
     }
   },

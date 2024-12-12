@@ -30,8 +30,8 @@
       <option value="Quick games">Quick games</option>
     </select>
     <div>
-      <button @click="clearFields" class="clear-button" >Clear Fields</button>
-  </div>
+      <button @click="clearFields" class="clear-button">Clear Fields</button>
+    </div>
 
   </div>
 
@@ -74,7 +74,6 @@ export default {
       axiosInstance
           .get(`${this.api}/findGameByGamename/${gamename}`)
           .then((res) => {
-            console.log("Games found:", res.data);
             this.$emit("update-approved-games", res.data);
           })
           .catch((error) => {
@@ -85,7 +84,6 @@ export default {
       axiosInstance
           .get(`${this.api}/findGameByAvailability/${availability}`)
           .then((res) => {
-            console.log("Games found:", res.data);
             this.$emit("update-approved-games", res.data);
           })
           .catch((error) => {
@@ -96,7 +94,6 @@ export default {
       axiosInstance
           .get(`${this.api}/findGameByGametype/${gametype}`)
           .then((res) => {
-            console.log("Games found:", res.data);
             this.$emit("update-approved-games", res.data);
           })
           .catch((error) => {
@@ -121,7 +118,7 @@ export default {
       document.getElementById("availabilitySelect").value = "";
       document.getElementById("gametypeSelect").value = "";
       this.$emit("reset-approved-games");
-  },
+    },
   },
 };
 </script>

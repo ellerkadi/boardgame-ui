@@ -1,8 +1,6 @@
 <template>
+  <br><br><br><br><br><br>
   <div class="auth-container" >
-    <br><br>
-    <br><br>
-    <br><br>
     <div v-if="!isLoggedIn" id="formauth-div">
       <h2>Login</h2>
       <form @submit.prevent="login">
@@ -46,19 +44,15 @@ export default {
         password: this.password,
       })
           .then((response) => {
-            //const role = response.data.role;
             const token = response.data.token;
 
-            localStorage.setItem('authToken', token);
             this.isLoggedIn = true;
             this.loggedInUser = this.username;
-            localStorage.setItem('loggedInUser', JSON.stringify({ username: this.username }));
             this.$emit('login', response.data.username);
-            console.log("auth token : " + localStorage.getItem('authToken'));
-            localStorage.setItem('userRole', response.data.role);//saving user role
-            localStorage.setItem('userName', response.data.name);//saving user role
-
-
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('loggedInUser', JSON.stringify({ username: this.username }));
+            localStorage.setItem('userRole', response.data.role);
+            localStorage.setItem('userName', response.data.name);
 
             const redirectTo = this.$route.query.redirect || '/home-page';
             this.$router.push(redirectTo).catch((err) => {
@@ -67,7 +61,7 @@ export default {
           })
           .catch((error) => {
             this.error = error.response?.data || "Login failed";
-            this.isLoggedIn = false;  // Ensure isLoggedIn is false if login fails
+            this.isLoggedIn = false;
           });
     },
     goToRegister() {
@@ -76,7 +70,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('authToken')) {
-      this.$store.commit('setIsLoggedIn', true); // Ensure isLoggedIn is correctly set
+      this.$store.commit('setIsLoggedIn', true);
     }
   },
 };

@@ -7,7 +7,7 @@ const store = createStore({
         username: '',
         role: '',
 
-        isLoggedIn: false, // Track login status globally
+        isLoggedIn: false,
     },
     mutations: {
         setUsername(state, username) {
@@ -18,7 +18,7 @@ const store = createStore({
         },
 
         setIsLoggedIn(state, status) {
-            state.isLoggedIn = status; // Update the login state globally
+            state.isLoggedIn = status;
         },
     },
 
@@ -31,8 +31,8 @@ const store = createStore({
                     },
                 });
                 const role = response.data;
-                commit("setRole", role); // Save the role to Vuex state
-                localStorage.setItem("userRole", role); // Persist role in localStorage
+                commit("setRole", role);
+                localStorage.setItem("userRole", role);
             } catch (error) {
                 console.error("Error fetching role:", error);
             }
@@ -40,8 +40,8 @@ const store = createStore({
 
         login({ commit }, { username, token }) {
             commit('setUsername', username);
+            commit("setIsLoggedIn", true);
             this.dispatch("fetchRole");
-            commit("setIsLoggedIn", true); // Set logged in status in store
             localStorage.setItem('authToken', token);
             localStorage.setItem('loggedInUser', JSON.stringify({ username }));
         },

@@ -1,8 +1,6 @@
 <template>
   <div v-if="isAdmin">
-    <br>
-    <h1>Pending games for review</h1>
-    <br>
+    <br><h1>Pending games for review</h1><br>
     <table>
       <thead>
       <tr>
@@ -23,8 +21,8 @@
         <td>{{ game.availability }}</td>
         <td>
           <div class="button-container">
-          <button @click="approveGame(game.id)" class="btn btn-success">Approve</button>
-          <button @click="rejectGame(game.id)" class="btn btn-danger">Reject</button>
+            <button @click="approveGame(game.id)" class="btn btn-success">Approve</button>
+            <button @click="rejectGame(game.id)" class="btn btn-danger">Reject</button>
           </div>
         </td>
       </tr>
@@ -35,6 +33,7 @@
 
 <script>
 import axiosInstance from "@/axiosConfig";
+
 axiosInstance.defaults.withCredentials = true;
 
 export default {
@@ -42,7 +41,7 @@ export default {
     return {
       api: "http://localhost:8082/api/boardgame",
       pendingGames: [],
-      isAdmin: false, // Tracks if the user is an admin
+      isAdmin: false,
     };
   },
   mounted() {
@@ -52,7 +51,7 @@ export default {
   methods: {
     checkUserRole() {
       const role = localStorage.getItem("userRole");
-      this.isAdmin = role === "admin"; // Set isAdmin to true if the user is an admin
+      this.isAdmin = role === "admin";
     },
     fetchPendingGames() {
       if (this.isAdmin) {

@@ -11,18 +11,16 @@
 #header {
     position: relative;
     width: 100%;
-    height: auto; /* Automatically adjust based on the image's aspect ratio */
+    height: auto;
 }
 
-/* Header image styling */
 #header img {
     display: block;
     width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    object-fit: cover; /* Cover the width of the container without distortion */
+    height: auto;
+    object-fit: cover;
 }
 
-/* Optional body background styling */
 body::before {
     content: '';
     position: fixed;
@@ -31,7 +29,6 @@ body::before {
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
-    /*url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_52683-59881.jpg?t=st=1733907125~exp=1733910725~hmac=f8285bf7458cba71e8e555089d9201e5bbba68426c39d5fe520e982449f3e53c&w=996');*/
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
@@ -59,22 +56,21 @@ body::before {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    /* Ensures that the content is not stretched */
 }
 
 .modal-header {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: center;
+    align-items: center;
     width: 100%;
     padding: 1rem;
     border-bottom: 0;
 }
 
 .modal-title {
-    font-size: 1.5rem; /* Adjust font size as needed */
+    font-size: 1.5rem;
     color: #2d3a3f;
-    margin: 0; /* Ensure there's no unwanted margin around the title */
+    margin: 0;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -83,8 +79,8 @@ body::before {
 .modal-body {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Horizontally center */
-    justify-content: center; /* Vertically center */
+    align-items: center;
+    justify-content: center;
     text-align: center;
     padding: 1rem;
 }
@@ -105,7 +101,7 @@ form {
 #app {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #fff; /* Set the background color here */
+    background-color: #fff;
 }
 
 h2 {
@@ -134,12 +130,12 @@ input, select, button {
 .remove-button,
 .contact-button,
 .search-button {
-    border-radius: 12px; /* Adjust the value for the desired roundness */
+    border-radius: 12px;
     font-size: 16px;
     padding: 6px;
     border: 1px solid #b0b8b1;
     background-color: #6c7c6d;
-    cursor: pointer; /* Change cursor on hover */
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 .clear-button {
@@ -150,14 +146,14 @@ input, select, button {
     background-color: #6c7c6d;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 0 auto; /* Center horizontally */
-    display: block; /* Ensure it's treated as block-level for centering */
+    margin: 0 auto;
+    display: block;
 }
 
 .change-button:hover,
 .remove-button:hover,
 .contact-button:hover {
-    background-color: #3e523f; /* Darker shade on hover */
+    background-color: #3e523f;
 }
 
 input[type="text"] {
@@ -182,10 +178,10 @@ select:focus {
 }
 
 button {
-    padding: 0.4rem 1rem; /* Smaller padding */
-    font-size: 0.875rem; /* Smaller font size */
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
     background-color: #5a7261;
-    border-radius: 20px; /* Rounded button */
+    border-radius: 20px;
     color: white;
     border: none;
     cursor: pointer;
@@ -198,11 +194,10 @@ button:hover {
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* New container for button spacing */
 .button-container {
     display: flex;
-    justify-content: flex-start; /* Align buttons to the left (or flex-end for right alignment) */
-    gap: 15px; /* Adds space between buttons */
+    justify-content: flex-start;
+    gap: 15px;
 }
 
 h1{
@@ -223,21 +218,21 @@ h4{
 
 .search-container {
     display: flex;
-    justify-content: flex-end; /* Align the search section to the right */
-    padding-right: 150px; /* Add padding on the right side */
+    justify-content: flex-end;
+    padding-right: 150px;
 }
 
 .small-select {
     padding: 5px;
-    font-size: 14px;  /* Smaller font size */
-    height: 30px;     /* Adjust height */
-    width: 150px;     /* Set a fixed width for smaller appearance */
+    font-size: 14px;
+    height: 30px;
+    width: 150px;
     border-radius: 5px;
-    border: 1px solid #ccc; /* Border style */
-    margin-bottom: 10px; /* Space between dropdowns */
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
 }
 
-table { /* table changes */
+table {
     width: 80%;
     table-layout: fixed;
     border-collapse: collapse;
@@ -247,10 +242,10 @@ table { /* table changes */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
 }
-.tbl-header{ /* table header changes */
+.tbl-header{
     background-color: rgba(255,255,255,0.3);
 }
-.tbl-content{ /* table content changes */
+.tbl-content{
     height:300px;
     overflow-x:auto;
     margin-top: 0px;
@@ -263,24 +258,12 @@ tr, th, td {
     font-size: 14px;
 }
 
-/*th {*/
-/*    background-color: rgba(240, 240, 240, 0.7); !* Slightly transparent header background *!*/
-/*    color: #2d3a3f; !* Dark text *!*/
-/*    font-weight: bold;*/
-/*    text-transform: uppercase;*/
-/*}*/
-
-/*td {*/
-/*    background-color: rgba(255, 255, 255, 0.6); !* More transparent cell background *!*/
-/*    color: #2d3a3f; !* Dark text *!*/
-/*}*/
-
 tr:nth-child(even) td {
-    background-color: rgba(245, 245, 245, 0.7); /* Even more transparent even rows */
+    background-color: rgba(245, 245, 245, 0.7);
 }
 
 tr:hover td {
-    background-color: rgba(230, 230, 230, 0.8); /* Subtle hover effect */
+    background-color: rgba(230, 230, 230, 0.8);
 }
 
 tr.spaceUnder>td {
@@ -288,13 +271,13 @@ tr.spaceUnder>td {
 }
 
 .navbar {
-    position: absolute; /* Place the navbar on top of the image */
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Full width across the page */
-    z-index: 10; /* Ensure it appears above other elements */
-    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand, .navbar-nav .nav-link {
@@ -319,38 +302,38 @@ tr.spaceUnder>td {
 
 #userGreeting {
     position: absolute;
-    top: 10px; /* Adjust top positioning */
-    right: 20px; /* Adjust right positioning */
+    top: 10px;
+    right: 20px;
     color: #fff;
     font-size: 20px;
     font-weight: bold;
-    display: flex; /* Align children horizontally */
-    align-items: center; /* Vertically center the text and button */
-    justify-content: space-between; /* Add space between the text and button */
-    z-index: 10; /* Ensure it is above the image */
-    width: auto; /* Ensure the container width is flexible */
-    gap: 15px; /* Optional: Adjust the gap between the text and button */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    width: auto;
+    gap: 15px;
 }
 
 #userGreeting p {
-    margin: 0;              /* Remove default margin from the <p> element */
+    margin: 0;
 }
 
 .logout-button {
-    padding: 8px 12px; /* Smaller padding */
-    font-size: 14px; /* Smaller font size */
-    background-color: #e74c3c; /* Red color */
-    color: white; /* White text */
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #e74c3c;
+    color: white;
     border: none;
-    border-radius: 20px; /* Rounded button */
+    border-radius: 20px;
     cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
-    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
 .logout-button:hover {
-    background-color: #c0392b; /* Darker red when hovered */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+    background-color: #c0392b;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 #form-main{
@@ -375,9 +358,9 @@ tr.spaceUnder>td {
 #formauth-div {
     padding: 0px;
     width: 600px;
-    margin: 0 auto; /* Center the form horizontally */
-    position: relative; /* Change to relative for better alignment */
-    background-color: #fff; /* Set background color */
+    margin: 0 auto;
+    position: relative;
+    background-color: #fff;
     border-radius: 7px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -387,31 +370,30 @@ tr.spaceUnder>td {
     display: flex;
     table-layout: fixed;
     flex-direction: column;
-    align-items: center; /* Center the form elements horizontally */
-    width: 100%; /* Ensure the form takes full width within the container */
+    align-items: center;
+    width: 100%;
 }
 
 label {
-    font-size: 1rem; /* Adjust font size as needed */
-    margin-bottom: 0.5rem; /* Adds space between label and select dropdown */
-    display: block; /* Ensures the label is displayed as a block element */
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-/* Style for the select box */
 .custom-select {
-    width: 100%; /* Ensures the select box takes up the full width */
-    padding: 0.5rem; /* Add padding to the select box for better spacing */
-    border-radius: 5px; /* Optional: adds rounded corners */
-    border: 1px solid #ccc; /* Border styling */
-    box-sizing: border-box; /* Ensures padding does not affect width */
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
 .customgame {
     width: 40%;
-    padding: 0.5rem; /* Add padding to the select box for better spacing */
-    border-radius: 5px; /* Optional: adds rounded corners */
-    border: 1px solid #ccc; /* Border styling */
-    box-sizing: border-box; /* Ensures padding does not affect width */
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
 select.custom-select option:checked {
@@ -455,7 +437,7 @@ select.customgame option:checked {
 }
 
 .password-container input {
-    padding-right: 60px; /* Add padding to accommodate the button */
+    padding-right: 60px;
 }
 
 .toggle-password {
@@ -472,25 +454,9 @@ select.customgame option:checked {
 }
 
 .form-floating {
-    margin-bottom: 0.5rem; /* Reduced margin to make inputs closer together */
+    margin-bottom: 0.5rem;
 }
 
 .alert {
-    font-size: 0.875rem; /* Reduced font size for success/error messages */
+    font-size: 0.875rem;
 }
-
-/*!* Keep the dropdown appearance clean *!
-select.custom-select {
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    color: #495057;
-}*/
-
-/*
-select.custom-select:focus {
-    outline: none;
-    border-color: #007bff; !* Blue border on focus *!
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}*/
