@@ -119,6 +119,7 @@ export default {
             this.fetchUser();
             this.updatedUser.password = '';
             this.successMessage = "Details successfully changed!";
+            localStorage.setItem('userName', res.data.name);
           })
           .catch(console.error)
     },

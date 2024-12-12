@@ -6,11 +6,11 @@
       <thead>
       <tr>
         <th>Name</th>
-        <th>Description</th>
-        <th>Game Types</th>
+        <th class="description-column">Description</th>
+        <th>Type</th>
         <th>Location</th>
         <th>Availability</th>
-        <th>Actions</th>
+        <th class="action-column">Actions</th>
       </tr>
       </thead>
       <tbody>

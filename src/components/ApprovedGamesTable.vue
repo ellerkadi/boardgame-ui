@@ -5,8 +5,8 @@
       <thead>
       <tr>
         <th>Name</th>
-        <th>Description</th>
-        <th>Game Types</th>
+        <th class="description-column">Description</th>
+        <th>Type</th>
         <th>Location</th>
         <th>Availability</th>
         <th v-if="isAdmin">Action</th>
@@ -51,7 +51,7 @@
           <div class="modal-body py-0">
             <form>
               <div class="mb-3 form-check">
-                <label for="floatingInput">Game name</label>
+                <label for="floatingInput">Name</label>
                 <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Game Name">
               </div>
@@ -72,7 +72,7 @@
             </form>
             <form>
               <div class="mb-3 form-check">
-                <label for="floatingInput">Game Type</label>
+                <label for="floatingInput">Type</label>
                 <select v-model="updatedGame.gametypes" id="floatingInput" required multiple class="custom-select">
                   <option value="Games for children">Games for children</option>
                   <option value="Classic games">Classic games</option>
@@ -88,7 +88,7 @@
             </form>
             <form>
               <div class="mb-3 form-check">
-                <label for="floatingInput">Game Availability</label>
+                <label for="floatingInput">Availability</label>
                 <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
                         id="floatingInput">
                   <option disabled value="">-- Select availability --</option>
@@ -233,6 +233,7 @@ export default {
             };
             this.closeModal();
             this.successMessage = "Details successfully changed!";
+            window.location.reload();
           })
           .catch((error) => {
             console.error("Error updating game:", error);
