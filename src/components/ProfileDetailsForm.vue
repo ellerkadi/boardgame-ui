@@ -34,7 +34,7 @@
         </div>
 
         <div class="submit mt-auto">
-          <button @click="updateUser(currentUser.id)" type="button" class="button">
+          <button class="change-button" @click="updateUser(currentUser.id)" type="button">
             Save changes
           </button>
         </div>
@@ -95,18 +95,27 @@ export default {
     },
     updateUser() {
       if (!this.updatedUser.password || !this.updatedUser.name || !this.updatedUser.email) {
-        this.errorMessage = "All fields must be filled in.";
-        this.successMessage = "";
+        this.errorMessage = "Name and Email are required.";
+        this.successMessage = "Details successfully changed!";
         return; // Prevent form submission if any field is empty
+      }
+
+      const payload = {
+        name: this.updatedUser.name,
+        email: this.updatedUser.email,
+      };
+
+      if (this.updatedUser.password) {
+        payload.password = this.updatedUser.password; // Include password only if updated
       }
 
       console.log('Updating user with ID:', this.currentUser.id);
       axiosInstance
-          .put(`${this.api}/updateUser/${this.currentUser.id}`, this.updatedUser)
+          .put(`${this.api}/updateUser/${this.currentUser.id}`, payload)
           .then((res) => {
             console.log('User updated:', res.data);
             this.fetchUser(); // Refresh the user details after update
-            this.updatedUser = {password: '', name: '', email: ''};
+            this.updatedUser.password = '';
             this.successMessage = "Details successfully changed!";
             this.errorMessage = "";
           })

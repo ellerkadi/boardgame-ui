@@ -6,10 +6,10 @@
   <br>
   <h1>Games For Rent!</h1>
 
-  <div v-if="isLoggedIn">
+  <div v-if="$store.state.isLoggedIn">
     <h4>Contact owner for more info</h4>
   </div>
-  <div v-if="!isLoggedIn">
+  <div v-if="!$store.state.isLoggedIn">
     <h4>Log in to rent a game</h4>
   </div>
 

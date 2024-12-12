@@ -17,7 +17,12 @@
         required
     />
     <label for="gametypes">Game types</label>
-    <select v-model="newGame.gametypes" id="gametypes" required multiple>
+      <select
+          v-model="newGame.gametypes"
+          id="gametypes"
+          required
+          multiple
+          class="custom-selectgame">
       <option value="Games for children">Games for children</option>
       <option value="Classic games">Classic games</option>
       <option value="Family games">Family games</option>
@@ -25,8 +30,8 @@
       <option value="Educational games">Educational games</option>
       <option value="Casual games">Casual games</option>
       <option value="Party games">Party games</option>
-      <option value="Party games">Outdoor games</option>
-      <option value="Party games">Quick games</option>
+      <option value="Outdoor games">Outdoor games</option>
+      <option value="Quick games">Quick games</option>
     </select>
     <input
         type="text"
@@ -44,11 +49,11 @@
         v-model="newGame.picture"
         placeholder="Picture URL"
     />
-    <button>Add</button>
+    <button class="change-button">Add</button>
       <br>
+      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
   </form>
   </div>
-  <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
 </template>
 
 <script>
@@ -62,7 +67,7 @@ export default {
         gamename: "",
         description: "",
         location: "",
-        gametypes: "",
+        gametypes: [],
         availability: "",
         status: "PENDING",
         picture: "",

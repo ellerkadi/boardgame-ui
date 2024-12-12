@@ -22,8 +22,10 @@
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
         <td>
+          <div class="button-container">
           <button @click="approveGame(game.id)" class="btn btn-success">Approve</button>
           <button @click="rejectGame(game.id)" class="btn btn-danger">Reject</button>
+          </div>
         </td>
       </tr>
       </tbody>

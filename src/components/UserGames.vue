@@ -22,38 +22,38 @@
         <td>{{ game.availability }}</td>
         <td>
           <div class="button-container">
-          <button @click="openModal(game)">Change</button>
-          <button @click="deleteGame(game.id)">Remove</button>
+          <button class="change-button" @click="openModal(game)">Change</button>
+          <button class="remove-button" @click="deleteGame(game.id)">Remove</button>
           </div>
         </td>
       </tr>
       </tbody>
     </table>
 
-    <div v-if="isModalVisible" class="modal fade show" tabindex="-1" role="dialog" id="modalSheet"
-         style="display: block;">
-      <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content rounded-4 shadow">
-          <div class="modal-header border-bottom-0">
-            <h1 class="modal-title fs-5">Change Game</h1>
-            <button @click="closeModal" type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button> <!-- x button to close -->
+    <div v-if="isModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="modalChoice">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-3 shadow">
+          <div class="modals-header border-bottom-0 text-center justify-content-center">
+            <br>
           </div>
           <div class="modal-body py-0">
             <form>
               <div class="mb-3 form-check">
+                <label for="floatingInput">Game name</label>
                 <input v-model="updatedGame.gamename" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Game Name">
               </div>
             </form>
             <form>
               <div class="mb-3 form-check">
+                <label for="floatingInput">Description</label>
                 <input v-model="updatedGame.description" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Description">
               </div>
             </form>
             <form>
               <div class="mb-3 form-check">
+                <label for="floatingInput">Location</label>
                 <input v-model="updatedGame.location" type="text" class="form-control rounded-3" id="floatingInput"
                        placeholder="Location">
               </div>
@@ -61,17 +61,16 @@
             <form>
               <div class="mb-3 form-check">
                 <label for="floatingInput">Game Type</label>
-                <select v-model="updatedGame.gametypes" class="form-control rounded-3" id="floatingInput" required multiple>
-                  <option disabled value="">-- Select at least one gametype --</option>
-                    <option value="Games for children">Games for children</option>
-                    <option value="Classic games">Classic games</option>
-                    <option value="Family games">Family games</option>
-                    <option value="Strategic games">Strategic games</option>
-                    <option value="Educational games">Educational games</option>
-                    <option value="Casual games">Casual games</option>
-                    <option value="Party games">Party games</option>
-                    <option value="Outdoor games">Outdoor games</option>
-                    <option value="Quick games">Quick games</option>
+                <select v-model="updatedGame.gametypes" id="floatingInput" required multiple class="custom-select">
+                  <option value="Games for children">Games for children</option>
+                  <option value="Classic games">Classic games</option>
+                  <option value="Family games">Family games</option>
+                  <option value="Strategic games">Strategic games</option>
+                  <option value="Educational games">Educational games</option>
+                  <option value="Casual games">Casual games</option>
+                  <option value="Party games">Party games</option>
+                  <option value="Outdoor games">Outdoor games</option>
+                  <option value="Quick games">Quick games</option>
                 </select>
               </div>
             </form>
@@ -87,16 +86,19 @@
               </div>
             </form>
             <form>
-              <img
-                  v-if="currentGame && currentGame.picture"
-                  :src="currentGame.picture"
-                  alt="Game Image"
-                  class="img-fluid mb-3"
-                  style="max-width: 200px; border-radius: 8px;"
-              >
               <div class="mb-3 form-check">
-                <input v-model="updatedGame.picture" type="text" class="form-control rounded-3" id="floatingInput"
-                       placeholder="Picture">
+                <label for="floatingInput">Picture</label>
+                <div class="mb-3 form-check">
+                  <input v-model="updatedGame.picture" type="text" class="form-control rounded-3" id="floatingInput"
+                         placeholder="Picture">
+                </div>
+                <img
+                    v-if="currentGame && currentGame.picture"
+                    :src="currentGame.picture"
+                    alt="Game Image"
+                    class="img-fluid mb-3"
+                    style="max-width: 200px; border-radius: 8px;"
+                >
               </div>
             </form>
           </div>
