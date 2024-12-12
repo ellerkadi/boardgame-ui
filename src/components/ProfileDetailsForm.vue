@@ -94,10 +94,9 @@ export default {
           });
     },
     updateUser() {
-      if (!this.updatedUser.password || !this.updatedUser.name || !this.updatedUser.email) {
+      if (!this.updatedUser.name || !this.updatedUser.email) {
         this.errorMessage = "Name and Email are required.";
-        this.successMessage = "Details successfully changed!";
-        return; // Prevent form submission if any field is empty
+        return;
       }
 
       const payload = {
@@ -117,7 +116,6 @@ export default {
             this.fetchUser(); // Refresh the user details after update
             this.updatedUser.password = '';
             this.successMessage = "Details successfully changed!";
-            this.errorMessage = "";
           })
           .catch(console.error)
     },
