@@ -258,6 +258,12 @@ tr, th, td {
     font-size: 14px;
 }
 
+.description-column {
+    width: 30%;
+}
+.action-column {
+    width: 15%;
+}
 tr:nth-child(even) td {
     background-color: rgba(245, 245, 245, 0.7);
 }
