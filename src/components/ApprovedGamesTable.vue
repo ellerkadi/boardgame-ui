@@ -92,7 +92,7 @@
                 <label for="floatingInput">Game Availability</label>
                 <select v-model="updatedGame.availability" type="boolean" class="form-control rounded-3"
                         id="floatingInput">
-                  <option disabled value="">-- Select one --</option>
+                  <option disabled value="">-- Select availability --</option>
                   <option :value="true">Available</option>
                   <option :value="false">Not available</option>
                 </select>
@@ -199,7 +199,7 @@ export default {
         description: game.description,
         gametypes: game.arrayGametypes,
         location: game.location,
-        availability: game.availability,
+        availability: game.availability ? true : false,
         picture: game.picture
       };
       this.isModalVisible = true;
