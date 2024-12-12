@@ -2,6 +2,7 @@
   <div>
     <MainNavbar />
   </div>
+  <br>
   <div>
     <UserGames/>
   </div>

@@ -1,7 +1,9 @@
 <template>
-  <h2>Add new game</h2>
-  <form @submit.prevent="addGame" class="d-flex align-items-center mb-4">
+  <br>
+  <div id="formauth-div">
+    <form @submit.prevent="addGame" class="d-flex align-items-center mb-4">
 
+      <h2>Add new game</h2>
     <input
         type="text"
         v-model="newGame.gamename"
@@ -43,7 +45,9 @@
         placeholder="Picture URL"
     />
     <button>Add</button>
+      <br>
   </form>
+  </div>
   <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
 </template>
 

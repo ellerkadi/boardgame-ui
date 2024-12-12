@@ -1,11 +1,27 @@
 <template>
-  <MainNavbar />
   <div>
-    <SearchGames/>
+    <MainNavbar/>
   </div>
+  <br>
+  <br>
+  <h1>Games For Rent!</h1>
+
+  <div v-if="isLoggedIn">
+    <h4>Contact owner for more info</h4>
+  </div>
+  <div v-if="!isLoggedIn">
+    <h4>Log in to rent a game</h4>
+  </div>
+
+  <div class="search-container">
+    <SearchGames />
+  </div>
+
   <div>
     <ApprovedGamesTable/>
   </div>
+  <br>
+  <br>
 </template>
 
 <script>
@@ -35,7 +51,7 @@ export default {
     if (localStorage.getItem('authToken')) {
       this.$store.commit('setIsLoggedIn', true); // Update Vuex store state
       this.checkUserRole();
-   //   this.checkUserName();
+      //   this.checkUserName();
     }
   },
 };

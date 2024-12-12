@@ -1,6 +1,8 @@
 <template>
   <div v-if="isAdmin">
-    <h2>Pending games for review</h2>
+    <br>
+    <h1>Pending games for review</h1>
+    <br>
     <table>
       <thead>
       <tr>

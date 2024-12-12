@@ -1,7 +1,28 @@
-body {
+* {
     margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
 }
 
+#header {
+    position: relative;
+    width: 100%;
+    height: auto; /* Automatically adjust based on the image's aspect ratio */
+}
+
+/* Header image styling */
+#header img {
+    display: block;
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the width of the container without distortion */
+}
+
+/* Optional body background styling */
 body::before {
     content: '';
     position: fixed;
@@ -9,11 +30,17 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
-    url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_52683-59881.jpg?t=st=1733907125~exp=1733910725~hmac=f8285bf7458cba71e8e555089d9201e5bbba68426c39d5fe520e982449f3e53c&w=996');
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+    /*url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_52683-59881.jpg?t=st=1733907125~exp=1733910725~hmac=f8285bf7458cba71e8e555089d9201e5bbba68426c39d5fe520e982449f3e53c&w=996');*/
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
+}
+
+#wrapperHeader {
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .modal {
@@ -58,8 +85,8 @@ form {
 
 #app {
     font-family: Arial, sans-serif;
-    margin: 20px;
     line-height: 1.6;
+    background-color: #fff; /* Set the background color here */
 }
 
 h2 {
@@ -85,10 +112,10 @@ input, select, button {
     font-size: 16px;
     padding: 10px;
     border: 1px solid #b0b8b1;
-    border-radius: 5px;
     outline: none;
     transition: all 0.3s ease;
     background-color: #f1f6f4;
+    border-radius: 20px;
 }
 
 input[type="text"] {
@@ -116,9 +143,9 @@ button {
     padding: 0.4rem 1rem; /* Smaller padding */
     font-size: 0.875rem; /* Smaller font size */
     background-color: #5a7261;
+    border-radius: 20px; /* Rounded button */
     color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -136,34 +163,75 @@ button:hover {
     gap: 15px; /* Adds space between buttons */
 }
 
-table {
-    width: 100%;
+h1{
+    font-size: 30px;
+    color: #fff;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h4{
+    font-size: 8px;
+    color: #fff;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.search-container {
+    display: flex;
+    justify-content: flex-end; /* Align the search section to the right */
+    padding-right: 150px; /* Add padding on the right side */
+}
+
+.small-select {
+    padding: 5px;
+    font-size: 14px;  /* Smaller font size */
+    height: 30px;     /* Adjust height */
+    width: 150px;     /* Set a fixed width for smaller appearance */
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Border style */
+    margin-bottom: 10px; /* Space between dropdowns */
+}
+
+table { /* table changes */
+    width: 80%;
+    table-layout: fixed;
     border-collapse: collapse;
-    margin-top: 10px;
-    background-color: rgba(255, 255, 255, 0.03); /* Even more transparent */
+    background-color: rgba(255, 255, 255, 0.03);
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+}
+.tbl-header{ /* table header changes */
+    background-color: rgba(255,255,255,0.3);
+}
+.tbl-content{ /* table content changes */
+    height:300px;
+    overflow-x:auto;
+    margin-top: 0px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+tr, th, td {
+    padding: 5px 7px;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 14px;
 }
 
-th, td {
-    padding: 4px 8px; /* Reduced padding for compactness */
-    text-align: left;
-    border: 1px solid black; /* Very light border */
-    font-size: 14px; /* Slightly smaller text size */
-}
+/*th {*/
+/*    background-color: rgba(240, 240, 240, 0.7); !* Slightly transparent header background *!*/
+/*    color: #2d3a3f; !* Dark text *!*/
+/*    font-weight: bold;*/
+/*    text-transform: uppercase;*/
+/*}*/
 
-th {
-    background-color: rgba(240, 240, 240, 0.7); /* Slightly transparent header background */
-    color: #2d3a3f; /* Dark text */
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-td {
-    background-color: rgba(255, 255, 255, 0.6); /* More transparent cell background */
-    color: #2d3a3f; /* Dark text */
-}
+/*td {*/
+/*    background-color: rgba(255, 255, 255, 0.6); !* More transparent cell background *!*/
+/*    color: #2d3a3f; !* Dark text *!*/
+/*}*/
 
 tr:nth-child(even) td {
     background-color: rgba(245, 245, 245, 0.7); /* Even more transparent even rows */
@@ -178,8 +246,13 @@ tr.spaceUnder>td {
 }
 
 .navbar {
-    background-color: transparent !important;
-    box-shadow: none !important;
+    position: absolute; /* Place the navbar on top of the image */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width across the page */
+    z-index: 10; /* Ensure it appears above other elements */
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
 }
 
 .navbar-brand, .navbar-nav .nav-link {
@@ -202,26 +275,41 @@ tr.spaceUnder>td {
     border-radius: 4px;
 }
 
-/*.auth-container {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    height: 100vh;*/
-/*    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),*/
-/*    url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_52683-59881.jpg?t=st=1733907125~exp=1733910725~hmac=f8285bf7458cba71e8e555089d9201e5bbba68426c39d5fe520e982449f3e53c&w=996');*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: cover;*/
-/*}*/
+#userGreeting {
+    position: absolute;
+    top: 10px; /* Adjust top positioning */
+    right: 20px; /* Adjust right positioning */
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex; /* Align children horizontally */
+    align-items: center; /* Vertically center the text and button */
+    justify-content: space-between; /* Add space between the text and button */
+    z-index: 10; /* Ensure it is above the image */
+    width: auto; /* Ensure the container width is flexible */
+    gap: 15px; /* Optional: Adjust the gap between the text and button */
+}
 
-/*.login-box {*/
-/*    background-color: #fff;*/
-/*    padding: 30px;*/
-/*    border-radius: 8px;*/
-/*    border: 2px solid #b0b8b1;*/
-/*    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);*/
-/*    width: 100%;*/
-/*    max-width: 400px;*/
-/*}*/
+#userGreeting p {
+    margin: 0;              /* Remove default margin from the <p> element */
+}
+
+.logout-button {
+    padding: 8px 12px; /* Smaller padding */
+    font-size: 14px; /* Smaller font size */
+    background-color: #e74c3c; /* Red color */
+    color: white; /* White text */
+    border: none;
+    border-radius: 20px; /* Rounded button */
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.logout-button:hover {
+    background-color: #c0392b; /* Darker red when hovered */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+}
 
 #form-main{
     width:100%;
@@ -243,17 +331,11 @@ tr.spaceUnder>td {
 }
 
 #formauth-div {
-    padding:35px;
-    width: 450px;
-    top: 40%;
-    left: 66%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    margin-top:30px;
-    margin-left: -260px;
-    -moz-border-radius: 7px;
-    -webkit-border-radius: 7px;
-    background-color: #fff;
+    padding: 0px;
+    width: 600px;
+    margin: 0 auto; /* Center the form horizontally */
+    position: relative; /* Change to relative for better alignment */
+    background-color: #fff; /* Set background color */
     border-radius: 7px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -261,6 +343,7 @@ tr.spaceUnder>td {
 
 #formauth-div form {
     display: flex;
+    table-layout: fixed;
     flex-direction: column;
     align-items: center; /* Center the form elements horizontally */
     width: 100%; /* Ensure the form takes full width within the container */
