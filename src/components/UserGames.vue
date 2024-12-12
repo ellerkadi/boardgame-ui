@@ -7,7 +7,7 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Game Type</th>
+        <th>Game Types</th>
         <th>Location</th>
         <th>Availability</th>
         <th>Actions</th>
@@ -160,23 +160,39 @@ export default {
     },
     openModal(game) {
       this.currentGame = game;
-      this.updatedGame = {gamename: game.gamename, description: game.description, gametypes: game.arrayGametypes, location: game.location, availability: game.availability, picture: game.picture};
-      this.isModalVisible = true; // Show modal
+      this.updatedGame = {
+        gamename: game.gamename,
+        description: game.description,
+        gametypes: game.arrayGametypes,
+        location: game.location,
+        availability: game.availability,
+        picture: game.picture
+      };
+      this.isModalVisible = true;
     },
     closeModal() {
-      this.isModalVisible = false; // Hide modal
+      this.isModalVisible = false;
     },
     updateGame() {
       axiosInstance
           .put(`${this.api}/updateGame/${this.currentGame.id}`, this.updatedGame)
           .then((res) => {
-            console.log('Game updated:', res.data);
+            console.log("Game updated:", res.data);
             this.fetchGames();
-            this.updatedGame = {gamename: '', description: '', gametypes: '', location: '', availability: '', picture: ''};
+            this.updatedGame = {
+              gamename: '',
+              description: '',
+              gametypes: '',
+              location: '',
+              availability: '',
+              picture: ''
+            };
             this.closeModal();
           })
-          .catch(console.error)
-    }
+          .catch((error) => {
+            console.error("Error updating game:", error);
+          });
+    },
   },
 };
 </script>

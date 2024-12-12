@@ -1,8 +1,7 @@
 <template>
-
-<br>
-    <div>
-      <table>
+  <br>
+  <div>
+    <table>
       <thead>
       <tr>
         <th>Name</th>
@@ -22,13 +21,13 @@
         <td>{{ game.location }}</td>
         <td>{{ game.availability }}</td>
 
-        <td v-if="isAdmin"> <!-- if role is admin then show. -->
+        <td v-if="isAdmin">
           <div class="button-container">
             <button class="change-button" @click="openModal(game)">Change</button>
             <button class="remove-button" @click="deleteGame(game.id)">Remove</button>
           </div>
         </td>
-        <td v-if="isUser || isAdmin"> <!-- if role is user then show. -->
+        <td v-if="isUser || isAdmin">
           <button class="contact-button" @click="openContactModal(game)">Contact</button>
         </td>
       </tr>
@@ -119,7 +118,8 @@
           <div class="modal-footer flex-column gap-2 pb-3 border-top-0">
             <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes
             </button>
-            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">Close and
+            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">
+              Close and
               lose your changes
             </button>
           </div>
@@ -205,19 +205,17 @@ export default {
       this.isModalVisible = true;
     },
     closeModal() {
-      console.log("Closing modal")
       this.isModalVisible = false;
     },
     openContactModal(game) {
-      console.log("Contact button clicked, game: ", game);   // Add this log
       this.currentGame = game;
       this.fetchUserByGameId(game.id);
       this.isContactModalVisible = true;
-      },
-    closeContactModal() {
-      this.isContactModalVisible = false; // Close the modal
     },
-    fetchUserByGameId(id){
+    closeContactModal() {
+      this.isContactModalVisible = false;
+    },
+    fetchUserByGameId(id) {
       axiosInstance
           .get(`${this.api}/getUserByGame/${id}`)
           .then((res) => {
