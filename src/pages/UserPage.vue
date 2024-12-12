@@ -28,10 +28,5 @@ export default {
       api: "http://localhost:8082/api/boardgame",
     };
   },
-  methods: {
-    goToHomePage() {
-      this.$router.push('/home-page');
-    },
-  },
 };
 </script>
