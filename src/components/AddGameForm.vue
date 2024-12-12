@@ -4,6 +4,7 @@
     <form @submit.prevent="addGame" class="d-flex align-items-center mb-4">
 
       <h2>Add new game</h2>
+
       <label for="gamename">Name</label>
       <input
           type="text"
@@ -16,7 +17,6 @@
           type="text"
           v-model="newGame.description"
           placeholder="Description"
-          required
       />
       <label for="gamelocation">Location</label>
       <input
@@ -26,12 +26,7 @@
           required
       />
       <label for="gametypes">Type</label>
-      <select
-          v-model="newGame.gametypes"
-          id="gametypes"
-          required
-          multiple
-          class="custom-selectgame">
+      <select v-model="newGame.gametypes" id="floatingInput" required multiple class="customgame">
         <option value="Games for children">Games for children</option>
         <option value="Classic games">Classic games</option>
         <option value="Family games">Family games</option>
@@ -54,9 +49,14 @@
           v-model="newGame.picture"
           placeholder="Picture URL"
       />
+      <div v-if="successMessage" class="alert alert-success mt-3" role="alert">
+        {{ successMessage }}
+      </div>
+      <div v-if="errorMessage" class="alert alert-danger mt-3" role="alert">
+        {{ errorMessage }}
+      </div>
       <button class="change-button">Add</button>
       <br>
-      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
     </form>
   </div>
 </template>
@@ -80,6 +80,7 @@ export default {
         user: {username: ''},
       },
       successMessage: '',
+      errorMessage: '',
       api: "http://localhost:8082/api/boardgame",
     };
   },
@@ -108,9 +109,18 @@ export default {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((response) => {
-            console.log("Game added successfully:", response.data);
+          .then(() => {
+
             this.successMessage = "Game added successfully! Game is pending approval, wait for admin to approve.";
+            this.newGame = {
+              gamename: "",
+              description: "",
+              location: "",
+              gametypes: [],
+              availability: "",
+              picture: "",
+              user: { username: '' },
+            };
           })
           .catch((error) => {
             console.error("Failed to add game:", error.response || error.message);

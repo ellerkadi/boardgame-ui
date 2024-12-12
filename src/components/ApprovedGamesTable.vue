@@ -118,17 +118,14 @@
           <div class="modal-footer flex-column gap-2 pb-3 border-top-0">
             <button @click="updateGame(currentGame.id)" type="button" class="btn btn-primary">Save changes
             </button>
-            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">
-              Close and
+            <button @click="closeModal" type="button" class="btn btn-primary btn-secondary" data-bs-dismiss="modal">Close and
               lose your changes
             </button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -148,6 +145,8 @@ export default {
       isModalVisible: false,
       isContactModalVisible: false,
       currentGame: null,
+      successMessage: '',
+      errorMessage: '',
       updatedGame: {
         gamename: "",
         description: "",
@@ -241,6 +240,8 @@ export default {
               picture: ''
             };
             this.closeModal();
+            this.successMessage = "Details successfully changed!";
+            this.errorMessage = "";
           })
           .catch((error) => {
             console.error("Error updating game:", error);
