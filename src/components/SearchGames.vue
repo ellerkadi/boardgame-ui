@@ -1,15 +1,5 @@
 <template>
     <div class="search-bar-container">
-<!--    <div class="search-bar">-->
-<!--      <input-->
-<!--          type="text"-->
-<!--          id="searchGameInput"-->
-<!--          placeholder="Enter game name"-->
-<!--          class="search-input"-->
-<!--      />-->
-<!--      <button @click="findGameByGamename" class="search-button">Search</button>-->
-<!--    </div>-->
-<!--    <br>-->
 
     <select id="availabilitySelect" @change="findGameByAvailability" class="small-select">
       <option value="">Select Availability</option>
@@ -30,95 +20,70 @@
       <option value="Quick games">Quick games</option>
     </select>
 
-      <SearchModal
-          :isModalVisible="isModalVisible"
-          :games="gamesToDisplay"
-          @close="isModalVisible = false"
-      />
-
-      <ContactModal
-          :is-contact-modal-visible="isContactModalVisible"
-          :currentGame="currentGame"
-          :userName="userName"
-          :userEmail="userEmail"
-          @close="closeContactModal"
-      />
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import axiosInstance from "../axiosConfig.js";
-import SearchModal from "@/components/SearchModal.vue";
 
 axios.defaults.withCredentials = true;
 export default {
   components: {
-    SearchModal,
   },
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
-      gamesToDisplay: [],
-      isModalVisible: false,
+      approvedGames: [],
+      isContactModalVisible: false,
+      currentGame: null,
+      updatedGame: {
+        gamename: "",
+        description: "",
+        location: "",
+        gametypes: "",
+        availability: "",
+        picture: "",
+      },
+      isAdmin: false,
+      token: false,
+      isUser: false,
+      userEmail: "",
+      userName: "",
     };
   },
   methods: {
-    fetchFindGameByGamename(gamename) {
-      if (!gamename) {
-        console.error("Game name is required to fetch data.");
-        return;
-      }
-      axiosInstance
-          .get(`${this.api}/findGameByGamename/${gamename}`)
-          .then((res) => {
-            console.log(res);
-            this.gamesToDisplay = res.data;
-            this.openModal();
-          });
-    },
-    // findGameByGamename() {
-    //   const gamename = document.getElementById("searchGameInput").value.trim();
-    //   this.fetchFindGameByGamename(gamename);
-    // },
-    openModal() {
-      this.isModalVisible = true;
-    },
     fetchFindGameByAvailability(availability) {
       axiosInstance
           .get(`${this.api}/findGameByAvailability/${availability}`)
           .then((res) => {
-            this.gamesToDisplay = res.data;
             console.log("Games found:", res.data);
-            this.openModal();
+            this.$emit("update-approved-games", res.data);// Update the table directly
+          })
+          .catch((error) => {
+            console.error("Error fetching games by availability:", error);
           });
     },
-    findGameByAvailability() {
-      const availability = document.getElementById("availabilitySelect").value;
-      if (availability === "") {
-        this.gamesToDisplay = [];
-      } else {
-        this.fetchFindGameByAvailability(availability === 'true' ? "Available" : "Not Available");
-      }
-    },
-
     fetchFindGameByGametype(gametype) {
       axiosInstance
           .get(`${this.api}/findGameByGametype/${gametype}`)
           .then((res) => {
-            this.gamesToDisplay = res.data;
             console.log("Games found:", res.data);
-            this.openModal();
+            this.$emit("update-approved-games", res.data); // Update the table directly
+          })
+          .catch((error) => {
+            console.error("Error fetching games by type:", error);
           });
+    },
+    findGameByAvailability() {
+      const availability = document.getElementById("availabilitySelect").value;
+        this.fetchFindGameByAvailability(availability === 'true' ? "Available" : "Not Available");
+
     },
     findGameByGametype() {
       const gametype = document.getElementById("gametypeSelect").value;
-      if (gametype === "") {
-        this.gamesToDisplay = [];
-      } else {
         this.fetchFindGameByGametype(gametype);
-      }
+      },
     },
-  },
 };
 </script>

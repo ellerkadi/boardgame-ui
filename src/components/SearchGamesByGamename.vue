@@ -9,32 +9,14 @@
     />
     <button @click="findGameByGamename" class="search-button">Search</button>
   </div>
-
-  <SearchModal
-      :isModalVisible="isModalVisible"
-      :games="gamesToDisplay"
-      @close="isModalVisible = false"
-  />
-
-  <ContactModal
-      :is-contact-modal-visible="isContactModalVisible"
-      :currentGame="currentGame"
-      :userName="userName"
-      :userEmail="userEmail"
-      @close="closeContactModal"
-  />
   </div>
 </template>
 <script>
 import axios from "axios";
 import axiosInstance from "../axiosConfig.js";
-import SearchModal from "@/components/SearchModal.vue";
 
 axios.defaults.withCredentials = true;
 export default {
-  components: {
-    SearchModal,
-  },
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
@@ -43,6 +25,10 @@ export default {
     };
   },
   methods: {
+    findGameByGamename() {
+      const gamename = document.getElementById("searchGameInput").value.trim();
+      this.fetchFindGameByGamename(gamename);
+    },
     fetchFindGameByGamename(gamename) {
       if (!gamename) {
         console.error("Game name is required to fetch data.");
@@ -51,17 +37,12 @@ export default {
       axiosInstance
           .get(`${this.api}/findGameByGamename/${gamename}`)
           .then((res) => {
-            console.log(res);
-            this.gamesToDisplay = res.data;
-            this.openModal();
+            console.log("Games found:", res.data);
+            this.$emit("update-approved-games", res.data); // Update the table directly
+          })
+          .catch((error) => {
+            console.error("Error fetching games by name:", error);
           });
-    },
-    findGameByGamename() {
-      const gamename = document.getElementById("searchGameInput").value.trim();
-      this.fetchFindGameByGamename(gamename);
-    },
-    openModal() {
-      this.isModalVisible = true;
     },
   },
 };

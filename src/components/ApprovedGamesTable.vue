@@ -133,13 +133,15 @@ import axiosInstance from "@/axiosConfig";
 import ContactModal from "@/components/ContactModal.vue";
 
 export default {
+  props: {
+    approvedGames: [],
+  },
   components: {
     ContactModal,
   },
   data() {
     return {
       api: "http://localhost:8082/api/boardgame",
-      approvedGames: [],
       isModalVisible: false,
       isContactModalVisible: false,
       currentGame: null,
@@ -174,7 +176,7 @@ export default {
       axiosInstance
           .get(`${this.api}/approvedGames`)
           .then((res) => {
-            this.approvedGames = res.data;
+            this.$emit("update:approvedGames", res.data);
           })
           .catch((error) => {
             console.error("Error fetching games:", error);
