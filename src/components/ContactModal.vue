@@ -11,11 +11,12 @@
               class="img-fluid mb-3"
               style="max-width: 200px; border-radius: 8px;"
           >
-          <button @click="closeContactModal" type="button" class="btn-close"
-                  aria-label="Close"></button>
           <h5 class="mb-0">Get in touch with the game owner</h5>
           <p class="mb-0">Name: {{ userName }} </p>
           <p class="mb-0">Email: {{ userEmail }} </p>
+          <br>
+          <button @click="closeContactModal" type="button" class="btn-close"
+                  aria-label="Close"></button>
         </div>
       </div>
     </div>

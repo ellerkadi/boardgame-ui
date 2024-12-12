@@ -7,7 +7,7 @@
         placeholder="Enter game name"
         class="search-input"
     />
-    <button @click="findGameByGamename" class="search-button">Search</button>
+    <button class="search-button" @click="findGameByGamename" >Search</button>
   </div>
   </div>
 </template>
