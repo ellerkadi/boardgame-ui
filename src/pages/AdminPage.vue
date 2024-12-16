@@ -1,4 +1,5 @@
 <template>
+  ADMIN
   <div>
     <MainNavbar />
   </div>
